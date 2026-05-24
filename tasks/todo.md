@@ -40,6 +40,12 @@
 
 ## Remaining (low priority — not blocking)
 
+### Deploy (2026-05-24)
+- [x] GitHub repo created: `busconductors/FameTicker`
+- [x] Netlify site created and linked: `fameticker.netlify.app`
+- [x] Netlify deploy fixed: removed `NETLIFY_NEXT_PLUGIN_SKIP` (was causing 404s)
+- [x] Production verified: homepage, search (accent fix confirmed), category, contact all 200
+
 - [ ] Move from static data to CMS/API when scaling
 
 ### QA Session (2026-05-24)
