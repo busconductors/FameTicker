@@ -94,22 +94,21 @@
 
 /* === BREAKING NEWS TICKER === */
 .ticker-bar {
-  background: var(--bg-primary);
+  background: #CC0000;
   height: 40px;
   display: flex;
   align-items: center;
   overflow: hidden;
   position: relative;
   z-index: 40;
-  border-bottom: 1px solid var(--border-gold);
 }
 
 .ticker-label {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: var(--text-dark);
-  background: var(--accent-gold);
+  color: #fff;
+  background: #CC0000;
   padding: 0 18px;
   flex-shrink: 0;
   text-transform: uppercase;
@@ -118,19 +117,7 @@
   align-items: center;
   z-index: 10;
   position: relative;
-}
-
-.ticker-label::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-right: 10px solid var(--bg-primary);
+  border-right: 1px solid rgba(255,255,255,0.25);
 }
 
 .ticker-track {
@@ -140,16 +127,14 @@
   display: flex;
   align-items: center;
   position: relative;
-  mask-image: linear-gradient(to right, transparent 0%, black 8px, black calc(100% - 8px), transparent 100%);
 }
 
 .ticker-content {
   font-size: 13px;
   font-weight: 500;
-  color: var(--text-primary);
+  color: #fff;
   white-space: nowrap;
-  animation: ticker-scroll 50s linear infinite;
-  opacity: 0.9;
+  animation: ticker-scroll 120s linear infinite;
   padding-left: 14px;
 }
 
