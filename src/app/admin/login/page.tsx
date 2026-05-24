@@ -1,17 +1,21 @@
 "use client";
 
-import { useActionState } from "react";
+import { useState, useTransition } from "react";
 import { login } from "../actions";
 
-const initialState: { error?: string } = {};
-
 export default function LoginPage() {
-  const [state, formAction, pending] = useActionState(
-    async (_prev: typeof initialState, formData: FormData) => {
-      return login(formData);
-    },
-    initialState
-  );
+  const [error, setError] = useState<string>();
+  const [pending, startTransition] = useTransition();
+
+  function handleSubmit(formData: FormData) {
+    setError(undefined);
+    startTransition(async () => {
+      const result = await login(formData);
+      if (result?.error) {
+        setError(result.error);
+      }
+    });
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -26,7 +30,7 @@ export default function LoginPage() {
           <p className="text-sm text-text-muted">Admin Login</p>
         </div>
 
-        <form action={formAction} className="bg-white border border-border rounded-lg p-6 space-y-4">
+        <form action={handleSubmit} className="bg-white border border-border rounded-lg p-6 space-y-4">
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-text-dark mb-1">
               Password
@@ -41,8 +45,8 @@ export default function LoginPage() {
             />
           </div>
 
-          {state?.error && (
-            <p className="text-sm text-[var(--accent-red)]">{state.error}</p>
+          {error && (
+            <p className="text-sm text-[var(--accent-red)]">{error}</p>
           )}
 
           <button
