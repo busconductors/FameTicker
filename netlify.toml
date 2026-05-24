@@ -8,14 +8,7 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# 301 redirect old Netlify URL to custom domain
-[[redirects]]
-  from = "https://fameticker.netlify.app/*"
-  to = "https://fameticker.news/:splat"
-  status = 301
-  force = true
-
-# www to apex
+# www to apex (activate after DNS is configured for fameticker.news)
 [[redirects]]
   from = "https://www.fameticker.news/*"
   to = "https://fameticker.news/:splat"
