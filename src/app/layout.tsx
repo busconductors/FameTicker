@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Bebas_Neue, DM_Sans, Cormorant_Garamond, Oswald } from "next/font/google";
 import PublicChrome from "../components/PublicChrome";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import NewsletterPopup from "../components/NewsletterPopup";
 
 const bebas = Bebas_Neue({
@@ -64,7 +66,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${bebas.variable} ${dmSans.variable} ${cormorantGaramond.variable} ${oswald.variable}`}>
       <body className="min-h-screen antialiased" style={{ fontFamily: "var(--font-dm-sans)" }}>
-        <PublicChrome>{children}</PublicChrome>
+        <PublicChrome header={<Header />} footer={<Footer />}>{children}</PublicChrome>
         <NewsletterPopup />
       </body>
     </html>

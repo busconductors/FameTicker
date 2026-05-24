@@ -1,7 +1,12 @@
 import type { Post, TickerMessage } from "@/data/types";
 
-const BASE_URL = process.env.TURSO_DATABASE_URL!.replace(/^libsql:/, "https:");
-const AUTH_TOKEN = process.env.TURSO_AUTH_TOKEN!;
+function getBaseUrl(): string {
+  return process.env.TURSO_DATABASE_URL!.replace(/^libsql:/, "https:");
+}
+
+function getAuthToken(): string {
+  return process.env.TURSO_AUTH_TOKEN!;
+}
 
 interface TursoColumn {
   name: string;
@@ -120,10 +125,10 @@ async function executeRaw(sql: string, args: (string | number | null)[] = []): P
     requests: [{ type: "execute", stmt }],
   };
 
-  const res = await fetch(`${BASE_URL}/v2/pipeline`, {
+  const res = await fetch(`${getBaseUrl()}/v2/pipeline`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${AUTH_TOKEN}`,
+      Authorization: `Bearer ${getAuthToken()}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
