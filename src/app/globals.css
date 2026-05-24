@@ -4,26 +4,32 @@
 
 @layer base {
   :root {
-    --bg-primary: #0D0D0D;
-    --bg-secondary: #1A1A1A;
-    --bg-cream: #FDF5E6;
-    --bg-warm: #F5EDE0;
+    /* === BACKGROUNDS === */
+    --bg-primary: #1A0A0A;
+    --bg-secondary: #2D1418;
+    --bg-cream: #FFF5F5;
+    --bg-warm: #FFEDED;
     --text-primary: #FFFFFF;
-    --text-secondary: #B8B8B8;
-    --text-dark: #1A1A1A;
-    --text-muted-dark: #6B6B6B;
-    --accent-gold: #C8A96E;
-    --accent-red: #D4382C;
-    --accent-red-dark: #B22222;
-    --tag-bg: #2A2A2A;
-    --border-gold: rgba(200, 169, 110, 0.2);
+    --text-secondary: #B89A9A;
+    --text-dark: #1A0A0A;
+    --text-muted-dark: #5C3D3D;
+    --text-dark-faint: #8B7070;
+    --accent-gold: #E8C4C4;
+    --accent-red: #8B0000;
+    --accent-rose: #8B4D5C;
+    --accent-blush: #D4A0A0;
+    --tag-bg: #2D1418;
+    --border-gold: rgba(232, 196, 196, 0.2);
+    --border-rose: rgba(139, 77, 92, 0.15);
     --breaking-green: #22C55E;
+    --shadow-card: 0 1px 4px rgba(26, 10, 10, 0.06);
+    --shadow-hover: 0 4px 16px rgba(26, 10, 10, 0.1);
     --radius: 0.625rem;
 
-    /* === TICKER-SPECIFIC: THE RUMOUR STYLE === */
-    --ticker-bg: #8B0000;
-    --ticker-text: #E8C4C4;
-    --ticker-label: #E8C4C4;
+    /* === TICKER-SPECIFIC === */
+    --ticker-bg: #CC0000;
+    --ticker-text: #FFFFFF;
+    --ticker-label: #FFFFFF;
     --ticker-height: 38px;
   }
 
@@ -54,7 +60,7 @@
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold;
     background-color: var(--accent-gold);
-    color: #0D0D0D;
+    color: #1A0A0A;
   }
 
   .btn-primary:hover {
@@ -73,10 +79,10 @@
 
   .section-header {
     @apply mb-4 flex items-center gap-4;
-    font-family: var(--font-bebas);
+    font-family: var(--font-oswald);
     font-size: 1.25rem;
-    font-weight: 900;
-    letter-spacing: 0.15em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--text-dark);
   }
@@ -85,12 +91,12 @@
     content: "";
     flex: 1;
     height: 1px;
-    background-color: var(--accent-gold);
-    opacity: 0.4;
+    background-color: var(--accent-blush);
+    opacity: 0.6;
   }
 }
 
-/* === BREAKING NEWS TICKER — THE RUMOUR STYLE === */
+/* === BREAKING NEWS TICKER === */
 .ticker-bar {
   background: var(--ticker-bg);
   height: var(--ticker-height);
@@ -99,19 +105,17 @@
   overflow: hidden;
   position: relative;
   z-index: 50;
-  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-              inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .ticker-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: var(--ticker-label);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #FFFFFF;
   padding: 0 14px;
   flex-shrink: 0;
   text-transform: uppercase;
-  border-right: 1px solid rgba(232, 196, 196, 0.25);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
   margin-right: 14px;
 }
 
@@ -121,39 +125,19 @@
   height: 100%;
   display: flex;
   align-items: center;
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 3%,
-    black 97%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 3%,
-    black 97%,
-    transparent 100%
-  );
 }
 
 .ticker-content {
-  font-style: italic;
+  font-size: 13px;
   font-weight: 500;
-  font-size: 14px;
-  color: var(--ticker-text);
+  color: #FFFFFF;
   white-space: nowrap;
-  animation: ticker-scroll 35s linear infinite;
-  letter-spacing: 0.02em;
+  animation: ticker-scroll 30s linear infinite;
 }
 
 @keyframes ticker-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .ticker-bar:hover .ticker-content {

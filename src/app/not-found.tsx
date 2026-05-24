@@ -3,10 +3,10 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="container mx-auto flex flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:px-8">
-      <h1 className="text-8xl font-bold opacity-10 text-foreground" style={{ fontFamily: "var(--font-playfair)" }}>
+      <h1 className="text-8xl font-bold opacity-10 text-foreground" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
         404
       </h1>
-      <h2 className="-mt-8 text-3xl font-bold text-foreground" style={{ fontFamily: "var(--font-playfair)" }}>
+      <h2 className="-mt-8 text-3xl font-bold text-foreground" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
         Page Not Found
       </h2>
       <p className="mt-3 max-w-md text-foreground/80">

@@ -20,7 +20,7 @@ export default function TrendingNow() {
           >
             <span
               className="text-gold font-bold text-[24px] leading-none min-w-[2rem] shrink-0"
-              style={{ fontFamily: "var(--font-playfair)" }}
+              style={{ fontFamily: "var(--font-cormorant-garamond)" }}
             >
               {String(i + 1).padStart(2, "0")}
             </span>

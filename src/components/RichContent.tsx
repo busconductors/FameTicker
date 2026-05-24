@@ -3,7 +3,7 @@ export default function RichContent({ content }: { content: string }) {
     <div
       className="prose prose-lg max-w-none"
       style={{
-        fontFamily: "var(--font-playfair)",
+        fontFamily: "var(--font-dm-sans)",
         color: "var(--text-dark)",
       }}
       dangerouslySetInnerHTML={{ __html: content }}

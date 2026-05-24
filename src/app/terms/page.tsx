@@ -4,7 +4,7 @@ export default function TermsPage() {
       <section className="bg-cream rounded-md p-6 sm:p-8">
         <h1
           className="text-3xl sm:text-4xl font-bold text-text-dark"
-          style={{ fontFamily: "var(--font-playfair)" }}
+          style={{ fontFamily: "var(--font-cormorant-garamond)" }}
         >
           Terms of Service
         </h1>

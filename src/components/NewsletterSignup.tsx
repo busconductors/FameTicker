@@ -29,7 +29,7 @@ export default function NewsletterSignup() {
     <section className="bg-card border border-border rounded-xl p-4">
       <h3
         className="text-xl font-bold tracking-wide text-gold"
-        style={{ fontFamily: "var(--font-playfair)" }}
+        style={{ fontFamily: "var(--font-cormorant-garamond)" }}
       >
         Fame Ticker
       </h3>
@@ -53,12 +53,12 @@ export default function NewsletterSignup() {
             placeholder="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-gold/50"
+            className="flex-1 bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-[var(--accent-red)]/50"
           />
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="bg-gold text-background px-4 py-2 text-sm font-semibold rounded-md hover:opacity-90 disabled:opacity-60"
+            className="bg-[var(--accent-red)] text-white px-4 py-2 text-sm font-semibold rounded-md hover:opacity-90 disabled:opacity-60"
           >
             {status === "submitting" ? "..." : "Subscribe"}
           </button>

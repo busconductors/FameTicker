@@ -27,7 +27,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ name:
         <section className="bg-cream rounded-md p-6 sm:p-8">
           <h1
             className="text-3xl sm:text-4xl font-bold text-text-dark"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            style={{ fontFamily: "var(--font-cormorant-garamond)" }}
           >
             Category Not Found
           </h1>
@@ -49,8 +49,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ name:
       <div className="mb-6 flex items-end justify-between">
         <div>
           <h1
-            className="text-4xl font-bold text-gold"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            className="text-4xl font-bold text-[var(--accent-gold)]"
+            style={{ fontFamily: "var(--font-cormorant-garamond)" }}
           >
             {cat}
           </h1>

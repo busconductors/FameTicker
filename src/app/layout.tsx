@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Playfair_Display, Bebas_Neue, DM_Sans, Cormorant_Garamond, Oswald } from "next/font/google";
+import { Bebas_Neue, DM_Sans, Cormorant_Garamond, Oswald } from "next/font/google";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import NewsletterPopup from "../components/NewsletterPopup";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-});
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -69,7 +63,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${bebas.variable} ${dmSans.variable} ${cormorantGaramond.variable} ${oswald.variable}`}>
+    <html lang="en" className={`${bebas.variable} ${dmSans.variable} ${cormorantGaramond.variable} ${oswald.variable}`}>
       <body className="min-h-screen antialiased" style={{ fontFamily: "var(--font-dm-sans)" }}>
         <div className="flex min-h-screen flex-col">
           <Header />

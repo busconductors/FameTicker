@@ -27,7 +27,7 @@ export default function Home() {
       {/* Trending Now + Latest Stories row */}
       <section className="container mx-auto grid gap-8 px-4 py-10 sm:px-6 lg:grid-cols-12 lg:px-8">
         <div className="lg:col-span-8">
-          <h2 className="section-header" style={{ fontFamily: "var(--font-bebas)" }}>
+          <h2 className="section-header" style={{ fontFamily: "var(--font-oswald)" }}>
             Latest Stories
           </h2>
           <div className="grid gap-5 sm:grid-cols-2">
@@ -47,7 +47,7 @@ export default function Home() {
         <section key={s.key} className={idx % 2 === 0 ? "bg-cream" : "bg-cream-warm"}>
           <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
             <div className="mb-6 flex items-end justify-between">
-              <h2 className="section-header" style={{ fontFamily: "var(--font-bebas)" }}>
+              <h2 className="section-header" style={{ fontFamily: "var(--font-oswald)" }}>
                 {s.title}
               </h2>
               <Link

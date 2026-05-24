@@ -71,7 +71,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             </div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-text-dark mb-3" style={{ fontFamily: "var(--font-playfair)" }}>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-text-dark mb-3" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
               {post.title}
             </h1>
 
@@ -99,7 +99,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <div className="mt-8 pt-6 border-t border-gold-dim">
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((t) => (
-                  <Link key={t} href={`/tag/${encodeURIComponent(t)}`} className="bg-[#2A2A2A] text-text-dark/70 text-xs font-medium px-3 py-1.5 rounded-full hover:bg-gold/20 hover:text-gold transition">
+                  <Link key={t} href={`/tag/${encodeURIComponent(t)}`} className="border border-[var(--accent-blush)] bg-transparent text-text-dark/70 text-xs font-medium px-3 py-1.5 rounded-full hover:bg-[var(--accent-blush)]/20 hover:text-[var(--accent-gold)] transition">
                     #{t}
                   </Link>
                 ))}

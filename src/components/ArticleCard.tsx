@@ -12,7 +12,10 @@ export default function ArticleCard({
   priority?: boolean;
 }) {
   return (
-    <article className="group rounded-xl overflow-hidden border border-border/10 bg-white shadow-sm transition hover:shadow-md">
+    <article
+      className="group rounded-xl overflow-hidden border border-border/10 bg-white transition"
+      style={{ boxShadow: "0 1px 4px rgba(26,10,10,0.06)" }}
+    >
       <Link href={`/${post.slug}`} className="block">
         <div className="relative">
           <Image
@@ -33,7 +36,7 @@ export default function ArticleCard({
         <div className="p-4 space-y-2">
           <h3
             className="line-clamp-2 text-lg font-bold leading-tight text-text-dark group-hover:underline"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            style={{ fontFamily: "var(--font-cormorant-garamond)" }}
           >
             {post.title}
           </h3>

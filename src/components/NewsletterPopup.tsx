@@ -42,7 +42,7 @@ export default function NewsletterPopup() {
       <div className="rounded-xl border border-border bg-card p-4 shadow-elevated">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="text-lg font-bold tracking-tight text-gold" style={{ fontFamily: "var(--font-playfair)" }}>
+            <h3 className="text-lg font-bold tracking-tight text-[var(--accent-gold)]" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
               Stay in the Loop
             </h3>
             <p className="text-sm text-foreground/80">Get the biggest scoops before anyone else.</p>
@@ -57,13 +57,13 @@ export default function NewsletterPopup() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+                className="flex-1 rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--accent-red)]/50"
                 aria-label="Email"
               />
               <button
                 type="submit"
                 disabled={status === "submitting"}
-                className="btn-primary rounded-md px-4 py-2 text-sm font-semibold"
+                className="bg-[var(--accent-red)] text-white rounded-md px-4 py-2 text-sm font-semibold hover:opacity-90"
                 aria-label="Subscribe"
               >
                 {status === "submitting" ? "..." : "Subscribe"}

@@ -25,7 +25,7 @@ export default function TagCloud() {
           <Link
             key={tag}
             href={`/tag/${encodeURIComponent(tag)}`}
-            className="bg-[#2A2A2A] text-text-secondary text-xs font-medium px-3 py-1.5 rounded-full hover:bg-gold/20 hover:text-gold transition"
+            className="bg-transparent border border-[var(--accent-blush)] text-text-secondary text-xs font-medium px-3 py-1.5 rounded-full hover:text-[var(--accent-gold)] transition"
           >
             #{tag}
           </Link>

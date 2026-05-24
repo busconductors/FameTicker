@@ -48,7 +48,7 @@ export default function Header() {
           <Link href="/" className="flex flex-col leading-none">
             <span
               className="text-xl font-bold uppercase tracking-[0.3em]"
-              style={{ fontFamily: "var(--font-playfair)", color: "var(--accent-gold)" }}
+              style={{ fontFamily: "var(--font-cormorant-garamond)", color: "var(--accent-gold)" }}
             >
               FAME TICKER
             </span>

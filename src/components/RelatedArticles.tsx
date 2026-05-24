@@ -10,7 +10,7 @@ export default function RelatedArticles({ current }: { current: Post }) {
 
   return (
     <section className="mt-12">
-      <h3 className="mb-4 text-xl font-bold text-text-dark" style={{ fontFamily: "var(--font-playfair)" }}>
+      <h3 className="mb-4 text-xl font-bold text-text-dark" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
         Related Articles
       </h3>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

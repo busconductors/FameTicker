@@ -4,7 +4,7 @@ export default function AboutPage() {
       <section className="bg-cream rounded-md p-6 sm:p-8">
         <h1
           className="text-3xl sm:text-4xl font-bold text-text-dark"
-          style={{ fontFamily: "var(--font-playfair)" }}
+          style={{ fontFamily: "var(--font-cormorant-garamond)" }}
         >
           About Fame Ticker
         </h1>
@@ -28,7 +28,7 @@ export default function AboutPage() {
 
         <h2
           className="mt-8 text-xl font-bold text-text-dark"
-          style={{ fontFamily: "var(--font-playfair)" }}
+          style={{ fontFamily: "var(--font-cormorant-garamond)" }}
         >
           What We Cover
         </h2>
@@ -43,7 +43,7 @@ export default function AboutPage() {
 
         <h2
           className="mt-8 text-xl font-bold text-text-dark"
-          style={{ fontFamily: "var(--font-playfair)" }}
+          style={{ fontFamily: "var(--font-cormorant-garamond)" }}
         >
           Our Standards
         </h2>
@@ -59,15 +59,15 @@ export default function AboutPage() {
 
         <h2
           className="mt-8 text-xl font-bold text-text-dark"
-          style={{ fontFamily: "var(--font-playfair)" }}
+          style={{ fontFamily: "var(--font-cormorant-garamond)" }}
         >
           Contact
         </h2>
 
         <div className="mt-3 space-y-1 text-text-dark/80" style={{ fontFamily: "var(--font-dm-sans)" }}>
-          <p>Tips: <span className="text-gold">tips@fameticker.news</span></p>
-          <p>Press: <span className="text-gold">press@fameticker.news</span></p>
-          <p>General: <span className="text-gold">hello@fameticker.news</span></p>
+          <p>Tips: <span className="text-[var(--accent-gold)]">tips@fameticker.news</span></p>
+          <p>Press: <span className="text-[var(--accent-gold)]">press@fameticker.news</span></p>
+          <p>General: <span className="text-[var(--accent-gold)]">hello@fameticker.news</span></p>
         </div>
       </section>
     </div>

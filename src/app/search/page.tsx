@@ -27,7 +27,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
       <h1
         className="mb-4 text-3xl font-bold text-foreground"
-        style={{ fontFamily: "var(--font-playfair)" }}
+        style={{ fontFamily: "var(--font-cormorant-garamond)" }}
       >
         Search
       </h1>
@@ -37,8 +37,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           type="text"
           name="q"
           defaultValue={q}
-          placeholder="Search gossip..."
-          className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-gold"
+          placeholder="Search Fame Ticker..."
+          className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-[var(--accent-red)]"
         />
       </form>
 

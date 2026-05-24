@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="space-y-3">
           <span
             className="text-lg font-bold uppercase tracking-[0.3em]"
-            style={{ fontFamily: "var(--font-playfair)", color: "var(--accent-gold)" }}
+            style={{ fontFamily: "var(--font-cormorant-garamond)", color: "var(--accent-gold)" }}
           >
             FAME TICKER
           </span>

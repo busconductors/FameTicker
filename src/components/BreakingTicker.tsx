@@ -20,7 +20,7 @@ export default function BreakingTicker() {
       <div className="ticker-track">
         <span
           className="ticker-content"
-          style={{ fontFamily: "var(--font-cormorant-garamond)" }}
+          style={{ fontFamily: "var(--font-dm-sans)" }}
         >
           {tickerText}  •  {tickerText}
         </span>

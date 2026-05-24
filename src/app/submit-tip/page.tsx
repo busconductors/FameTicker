@@ -33,7 +33,7 @@ export default function SubmitTipPage() {
       <section className="bg-cream rounded-md p-6 sm:p-8">
         <h1
           className="text-3xl sm:text-4xl font-bold text-text-dark"
-          style={{ fontFamily: "var(--font-playfair)" }}
+          style={{ fontFamily: "var(--font-cormorant-garamond)" }}
         >
           Tip the Ticker.
         </h1>
@@ -60,7 +60,7 @@ export default function SubmitTipPage() {
               placeholder="Your name (optional)"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-md border border-border bg-white px-3 py-2 text-sm text-text-dark outline-none focus:ring-2 focus:ring-gold"
+              className="w-full rounded-md border border-border bg-white px-3 py-2 text-sm text-text-dark outline-none focus:ring-2 focus:ring-[var(--accent-red)]"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             />
             <input
@@ -68,14 +68,14 @@ export default function SubmitTipPage() {
               placeholder="Contact email (optional)"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md border border-border bg-white px-3 py-2 text-sm text-text-dark outline-none focus:ring-2 focus:ring-gold"
+              className="w-full rounded-md border border-border bg-white px-3 py-2 text-sm text-text-dark outline-none focus:ring-2 focus:ring-[var(--accent-red)]"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             />
             <textarea
               placeholder="Your tip (be as detailed as possible)"
               value={tip}
               onChange={(e) => setTip(e.target.value)}
-              className="min-h-[160px] w-full rounded-md border border-border bg-white px-3 py-2 text-sm text-text-dark outline-none focus:ring-2 focus:ring-gold"
+              className="min-h-[160px] w-full rounded-md border border-border bg-white px-3 py-2 text-sm text-text-dark outline-none focus:ring-2 focus:ring-[var(--accent-red)]"
               style={{ fontFamily: "var(--font-dm-sans)" }}
               required
             />
@@ -90,7 +90,7 @@ export default function SubmitTipPage() {
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="bg-gold text-background px-6 py-2 font-semibold rounded-md hover:opacity-90 disabled:opacity-50"
+              className="bg-[var(--accent-red)] text-white px-6 py-2 font-semibold rounded-md hover:opacity-90 disabled:opacity-50"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
               {status === "submitting" ? "Sending..." : "Send Tip"}
