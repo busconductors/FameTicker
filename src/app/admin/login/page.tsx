@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { login } from "../actions";
+import { loginAction } from "./actions";
 
 export default function LoginPage() {
   const [error, setError] = useState<string>();
@@ -10,7 +10,7 @@ export default function LoginPage() {
   function handleSubmit(formData: FormData) {
     setError(undefined);
     startTransition(async () => {
-      const result = await login(formData);
+      const result = await loginAction(formData);
       if (result?.error) {
         setError(result.error);
       }
