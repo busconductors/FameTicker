@@ -130,6 +130,8 @@ async function executeRaw(sql: string, args: (string | number | null)[] = []): P
     headers: {
       Authorization: `Bearer ${getAuthToken()}`,
       "Content-Type": "application/json",
+      // Unique header prevents Next.js fetch dedup during static generation
+      "X-Request-Id": `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
     },
     body: JSON.stringify(body),
   });
