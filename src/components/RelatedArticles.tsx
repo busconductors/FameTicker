@@ -1,10 +1,9 @@
 import ArticleCard from "./ArticleCard";
-import { posts, type Post } from "@/data";
+import { getRelatedPosts } from "@/db";
+import type { Post } from "@/data";
 
-export default function RelatedArticles({ current }: { current: Post }) {
-  const related = posts
-    .filter((p) => p.category === current.category && p.slug !== current.slug)
-    .slice(0, 4);
+export default async function RelatedArticles({ current }: { current: Post }) {
+  const related = await getRelatedPosts(current.category, current.slug, 4);
 
   if (!related.length) return null;
 

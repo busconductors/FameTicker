@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ArticleCard from "../../../components/ArticleCard";
-import { posts, categories, type Category } from "@/data";
+import { getPostsByCategory, getAllCategories } from "@/db";
+import type { Category } from "@/data";
 
-function normalizeCategory(name: string): Category | null {
+async function normalizeCategory(name: string): Promise<Category | null> {
   const decoded = decodeURIComponent(name).toLowerCase();
+  const categories = await getAllCategories();
   const found = categories.find((c) => c.toLowerCase() === decoded);
-  return found ?? null;
+  return (found as Category) ?? null;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ name: string }> }): Promise<Metadata> {
   const { name } = await params;
-  const cat = normalizeCategory(name);
+  const cat = await normalizeCategory(name);
   return {
     title: cat ?? "Category Not Found",
     description: cat ? `Latest ${cat} news, gossip, and updates on Fame Ticker.` : undefined,
@@ -20,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ name: str
 
 export default async function CategoryPage({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
-  const cat = normalizeCategory(name);
+  const cat = await normalizeCategory(name);
   if (!cat) {
     return (
       <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
@@ -42,7 +44,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ name:
     );
   }
 
-  const items = posts.filter((p) => p.category === cat);
+  const items = await getPostsByCategory(cat);
 
   return (
     <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">

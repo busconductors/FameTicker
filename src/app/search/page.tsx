@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ArticleCard from "../../components/ArticleCard";
-import { posts } from "@/data";
+import { searchPosts } from "@/db";
 
 export const metadata: Metadata = {
   title: "Search",
@@ -14,8 +14,9 @@ function stripAccents(s: string) {
 export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const { q: rawQ } = await searchParams;
   const q = (rawQ ?? "").trim();
+  const dbResults = q ? await searchPosts(q) : [];
   const results = q
-    ? posts.filter((p) => {
+    ? dbResults.filter((p) => {
         const query = stripAccents(q).toLowerCase();
         const title = stripAccents(p.title).toLowerCase();
         const excerpt = stripAccents(p.excerpt).toLowerCase();

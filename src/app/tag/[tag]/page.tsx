@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ArticleCard from "../../../components/ArticleCard";
-import { posts } from "@/data";
+import { getPostsByTag } from "@/db";
 
 export async function generateMetadata({ params }: { params: Promise<{ tag: string }> }): Promise<Metadata> {
   const { tag: rawTag } = await params;
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ tag: stri
 export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag: rawTag } = await params;
   const tag = decodeURIComponent(rawTag);
-  const results = posts.filter((p) => p.tags.some((t) => t.toLowerCase() === tag.toLowerCase()));
+  const results = await getPostsByTag(tag);
 
   return (
     <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">

@@ -1,11 +1,13 @@
 import type { MetadataRoute } from "next";
-import { posts, categories } from "@/data";
+import { getAllPosts, getAllCategories } from "@/db";
 
 const BASE_URL = "https://fameticker.news";
 
 const staticPages = ["", "/about", "/contact", "/privacy", "/terms", "/submit-tip", "/search"];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [posts, categories] = await Promise.all([getAllPosts(), getAllCategories()]);
+
   const staticEntries: MetadataRoute.Sitemap = staticPages.map((path) => ({
     url: `${BASE_URL}${path}`,
     lastModified: new Date(),

@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { posts } from "@/data";
+import { getTrendingPosts } from "@/db";
 
-export default function TrendingNow() {
-  const trending = posts.filter((p) => p.trending).slice(0, 5);
+export default async function TrendingNow() {
+  const trending = await getTrendingPosts(5);
 
   return (
     <section className="bg-cream-warm rounded-xl p-6">

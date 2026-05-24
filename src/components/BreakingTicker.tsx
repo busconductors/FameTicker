@@ -1,9 +1,7 @@
-import { posts } from "@/data";
+import { getBreakingPosts } from "@/db";
 
-export default function BreakingTicker() {
-  const breakingPosts = posts
-    .filter((p) => p.isBreaking || p.trending)
-    .slice(0, 4);
+export default async function BreakingTicker() {
+  const breakingPosts = await getBreakingPosts(4);
 
   const tickerText = breakingPosts.map((p) => p.title).join("  •  ");
 

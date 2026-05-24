@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { posts } from "@/data";
+import { getFeaturedPost, getLatestPosts } from "@/db";
 import BreakingBadge from "./BreakingBadge";
 import CategoryPill from "./CategoryPill";
 
-export default function Hero() {
-  const feature = posts.find((p) => p.featured) ?? posts[0];
+export default async function Hero() {
+  const feature = (await getFeaturedPost()) ?? (await getLatestPosts(1))[0];
+  if (!feature) return null;
 
   return (
     <section className="relative w-full">

@@ -1,12 +1,10 @@
-"use client";
-
 import Link from "next/link";
-import { posts } from "@/data";
+import { getPopularPosts } from "@/db";
 import NewsletterSignup from "./NewsletterSignup";
 import TagCloud from "./TagCloud";
 
-export default function Sidebar() {
-  const popular = posts.filter((p) => p.popular).slice(0, 4);
+export default async function Sidebar() {
+  const popular = await getPopularPosts(4);
 
   return (
     <aside className="space-y-8">

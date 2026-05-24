@@ -4,13 +4,10 @@ import Hero from "../components/Hero";
 import TrendingNow from "../components/TrendingNow";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";
-import { posts, type Category } from "@/data";
+import { getLatestPosts, getPostsByCategory } from "@/db";
+import type { Category } from "@/data";
 
-export default function Home() {
-  const latest = [...posts].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-
+export default async function Home() {
   const sections: { key: Category; title: string }[] = [
     { key: "Relationships", title: "Celebrity Couples" },
     { key: "Music", title: "Music" },
@@ -18,6 +15,11 @@ export default function Home() {
     { key: "Fashion", title: "Fashion" },
     { key: "Reality TV", title: "Reality TV" },
   ];
+
+  const [latest, ...sectionPosts] = await Promise.all([
+    getLatestPosts(6),
+    ...sections.map((s) => getPostsByCategory(s.key)),
+  ]);
 
   return (
     <>
@@ -58,10 +60,7 @@ export default function Home() {
               </Link>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {posts
-                .filter((p) => p.category === s.key)
-                .slice(0, 4)
-                .map((post) => (
+              {sectionPosts[idx].slice(0, 4).map((post) => (
                   <ArticleCard key={post.slug} post={post} />
                 ))}
             </div>

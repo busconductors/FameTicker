@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { posts } from "@/data";
+import { getPostBySlug } from "@/db";
 import BreakingBadge from "../../components/BreakingBadge";
 import CategoryPill from "../../components/CategoryPill";
 import ShareButtons from "../../components/ShareButtons";
@@ -12,7 +12,7 @@ import CommentsPlaceholder from "../../components/CommentsPlaceholder";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = posts.find((p) => p.slug === decodeURIComponent(slug));
+  const post = await getPostBySlug(decodeURIComponent(slug));
   if (!post) return { title: "Not Found" };
   return {
     title: post.title,
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = posts.find((p) => p.slug === decodeURIComponent(slug));
+  const post = await getPostBySlug(decodeURIComponent(slug));
   if (!post) return notFound();
 
   const url = "https://fameticker.news/" + post.slug;

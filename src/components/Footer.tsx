@@ -1,12 +1,5 @@
 import Link from "next/link";
-
-const categories = [
-  { href: "/category/Music", label: "Music" },
-  { href: "/category/Movies", label: "Movies" },
-  { href: "/category/Relationships", label: "Relationships" },
-  { href: "/category/Fashion", label: "Fashion" },
-  { href: "/category/Reality%20TV", label: "Reality TV" },
-];
+import { getAllCategories } from "@/db";
 
 const navigateLinks = [
   { href: "/", label: "Home" },
@@ -16,7 +9,11 @@ const navigateLinks = [
   { href: "/terms", label: "Terms" },
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  const categories = (await getAllCategories()).map((cat) => ({
+    href: `/category/${encodeURIComponent(cat)}`,
+    label: cat,
+  }));
   return (
     <footer className="mt-16 border-t border-border bg-card">
       <div className="container mx-auto grid grid-cols-1 gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-3 sm:px-6 lg:px-8">
