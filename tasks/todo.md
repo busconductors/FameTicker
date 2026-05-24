@@ -48,6 +48,18 @@
 
 - [ ] Move from static data to CMS/API when scaling
 
+### Redesign — spillitnow.space Clone (2026-05-24)
+- [x] Dark luxury theme: #0D0D0D base, cream sections (#FDF5E6), gold accents (#C8A96E)
+- [x] Breaking news ticker: red bar with CSS scroll animation (25s linear infinite)
+- [x] "THE TEA" gold Playfair Display branding, DM Sans body font
+- [x] 6 new components: BreakingTicker, BreakingBadge, CategoryPill, TrendingNow, TagCloud, NewsletterSignup
+- [x] 13 articles enriched with full HTML body content from spec
+- [x] Dark mode toggle removed (single theme)
+- [x] All 12 pages restyled: Playfair Display headlines, cream content backgrounds, gold accents
+- [x] Breadcrumb navigation on article pages
+- [x] Build: 0 errors, all 12 pages compile
+- [x] Deployed: https://fameticker.netlify.app
+
 ### QA Session (2026-05-24)
 - [x] Search: accent-insensitive matching — normalized unicode diacritics before comparison (809e188)
 - [x] Performance: LCP priority on above-fold ArticleCard images — added priority prop to ArticleCard (809e188)
