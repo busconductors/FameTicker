@@ -42,6 +42,12 @@
 
 - [ ] Move from static data to CMS/API when scaling
 
+### QA Session (2026-05-24)
+- [x] Search: accent-insensitive matching — normalized unicode diacritics before comparison (809e188)
+- [x] Performance: LCP priority on above-fold ArticleCard images — added priority prop to ArticleCard (809e188)
+- [x] XSS check: search rendering verified safe — React auto-escapes by default
+- [ ] Deferred: 404 page returns HTTP 200 (Next.js not-found.tsx limitation)
+
 ### Security & Polish
 - [x] Image optimization: removed global `unoptimized: true`, added `unoptimized` prop to CDN `<Image>` components (Hero, ArticleCard, [slug])
 - [x] Dark mode SSR flash: inline `<script>` in `<head>` applies `dark` class before hydration, Header reads initial state from DOM
