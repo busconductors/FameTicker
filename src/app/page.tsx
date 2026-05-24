@@ -26,8 +26,8 @@ export default function Home() {
             Latest Stories
           </h2>
           <div className="grid gap-5 sm:grid-cols-2">
-            {latest.slice(0, 6).map((post) => (
-              <ArticleCard key={post.slug} post={post} />
+            {latest.slice(0, 6).map((post, i) => (
+              <ArticleCard key={post.slug} post={post} priority={i < 2} />
             ))}
           </div>
         </div>

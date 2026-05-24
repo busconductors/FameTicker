@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Post } from "@/data";
 
-export default function ArticleCard({ post }: { post: Post }) {
+export default function ArticleCard({ post, priority = false }: { post: Post; priority?: boolean }) {
   return (
     <article className="group overflow-hidden rounded-xl border border-border bg-card transition hover:shadow-elevated">
       <Link href={`/${post.slug}`} className="block">
@@ -14,6 +14,7 @@ export default function ArticleCard({ post }: { post: Post }) {
             height={675}
             className="h-48 w-full object-cover sm:h-56"
             unoptimized
+            priority={priority}
           />
           <div className="absolute left-3 top-3">
             <span className="badge border-transparent bg-secondary/90 text-secondary-foreground">

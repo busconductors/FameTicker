@@ -7,15 +7,20 @@ export const metadata: Metadata = {
   description: "Search celebrity news, gossip, and entertainment updates on Spill It Now.",
 };
 
+function stripAccents(s: string) {
+  return s.normalize("NFD").replace(/[̀-ͯ]/g, "");
+}
+
 export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const { q: rawQ } = await searchParams;
   const q = (rawQ ?? "").trim();
   const results = q
-    ? posts.filter(
-        (p) =>
-          p.title.toLowerCase().includes(q.toLowerCase()) ||
-          p.excerpt.toLowerCase().includes(q.toLowerCase())
-      )
+    ? posts.filter((p) => {
+        const query = stripAccents(q).toLowerCase();
+        const title = stripAccents(p.title).toLowerCase();
+        const excerpt = stripAccents(p.excerpt).toLowerCase();
+        return title.includes(query) || excerpt.includes(query);
+      })
     : [];
 
   return (
