@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getAllPosts, getTickerMessages } from "@/db";
-import { FileText, Plus, MessageSquare } from "lucide-react";
+import { FileText, Plus, MessageSquare, TrendingUp, Zap, Hash } from "lucide-react";
 
 export default async function AdminDashboard() {
   const [posts, tickerMessages] = await Promise.all([
@@ -9,75 +9,148 @@ export default async function AdminDashboard() {
   ]);
 
   const breakingCount = posts.filter((p) => p.isBreaking).length;
+  const trendingCount = posts.filter((p) => p.trending).length;
   const recentPosts = posts.slice(0, 5);
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold text-text-dark mb-6" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
-        Dashboard
-      </h2>
-
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-8">
-        <StatCard label="Total Posts" value={posts.length} icon={FileText} />
-        <StatCard label="Breaking Posts" value={breakingCount} icon={MessageSquare} />
-        <StatCard label="Ticker Messages" value={tickerMessages.length} icon={MessageSquare} />
+    <div className="max-w-6xl">
+      {/* ── Header ── */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            {posts.length} posts · {tickerMessages.length} ticker messages
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin/ticker"
+            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors inline-flex items-center gap-2"
+          >
+            <MessageSquare size={16} />
+            Ticker
+          </Link>
+          <Link
+            href="/admin/posts/new"
+            className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors inline-flex items-center gap-2"
+          >
+            <Plus size={16} />
+            New Post
+          </Link>
+        </div>
       </div>
 
-      <div className="flex gap-3 mb-8">
-        <Link
-          href="/admin/posts/new"
-          className="inline-flex items-center gap-2 rounded-md bg-[var(--accent-gold)] text-white font-medium px-4 py-2 text-sm hover:opacity-90 transition"
-        >
-          <Plus size={16} />
-          New Post
-        </Link>
-        <Link
-          href="/admin/ticker"
-          className="inline-flex items-center gap-2 rounded-md border border-border bg-white text-text-dark font-medium px-4 py-2 text-sm hover:bg-gray-50 transition"
-        >
-          <MessageSquare size={16} />
-          Manage Ticker
-        </Link>
+      {/* ── Stat Cards ── */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+        <StatCard
+          label="Total Posts"
+          value={posts.length}
+          icon={FileText}
+          accent="indigo"
+        />
+        <StatCard
+          label="Breaking"
+          value={breakingCount}
+          icon={Zap}
+          accent="red"
+        />
+        <StatCard
+          label="Trending"
+          value={trendingCount}
+          icon={TrendingUp}
+          accent="amber"
+        />
+        <StatCard
+          label="Ticker Messages"
+          value={tickerMessages.length}
+          icon={Hash}
+          accent="emerald"
+        />
       </div>
 
-      <h3 className="text-lg font-semibold text-text-dark mb-3">Recent Posts</h3>
-      <div className="bg-white border border-border rounded-lg overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 border-b border-border">
-            <tr>
-              <th className="text-left px-4 py-2.5 font-medium text-text-muted">Title</th>
-              <th className="text-left px-4 py-2.5 font-medium text-text-muted">Category</th>
-              <th className="text-left px-4 py-2.5 font-medium text-text-muted">Date</th>
-              <th className="text-left px-4 py-2.5 font-medium text-text-muted">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recentPosts.map((post) => (
-              <tr key={post.slug} className="border-b border-border last:border-0">
-                <td className="px-4 py-2.5">
-                  <Link
-                    href={`/admin/posts/${post.slug}/edit`}
-                    className="text-text-dark hover:text-[var(--accent-gold)] transition"
-                  >
-                    {post.title.slice(0, 60)}
-                    {post.title.length > 60 ? "..." : ""}
-                  </Link>
-                </td>
-                <td className="px-4 py-2.5 text-text-muted">{post.category}</td>
-                <td className="px-4 py-2.5 text-text-muted">
-                  {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                </td>
-                <td className="px-4 py-2.5">
-                  <div className="flex gap-1">
-                    {post.isBreaking && <Badge color="red">Breaking</Badge>}
-                    {post.featured && <Badge color="gold">Featured</Badge>}
-                    {post.trending && <Badge color="blue">Trending</Badge>}
-                  </div>
-                </td>
+      {/* ── Recent Posts ── */}
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            Recent Posts
+          </h2>
+          <Link
+            href="/admin/posts"
+            className="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+          >
+            View all
+          </Link>
+        </div>
+
+        {recentPosts.length === 0 ? (
+          <div className="px-5 py-12 text-center">
+            <FileText size={32} className="mx-auto text-gray-300 mb-3" />
+            <p className="text-sm text-gray-500">No posts yet</p>
+            <Link
+              href="/admin/posts/new"
+              className="inline-flex items-center gap-1.5 mt-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+            >
+              <Plus size={14} />
+              Create your first post
+            </Link>
+          </div>
+        ) : (
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-gray-100">
+                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Title
+                </th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
+                  Category
+                </th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
+                  Date
+                </th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Flags
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {recentPosts.map((post) => (
+                <tr
+                  key={post.slug}
+                  className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors"
+                >
+                  <td className="px-5 py-3">
+                    <Link
+                      href={`/admin/posts/${post.slug}/edit`}
+                      className="text-gray-900 font-medium hover:text-indigo-600 transition-colors line-clamp-1"
+                    >
+                      {post.title}
+                    </Link>
+                  </td>
+                  <td className="px-5 py-3 text-gray-500 hidden sm:table-cell">
+                    {post.category}
+                  </td>
+                  <td className="px-5 py-3 text-gray-500 hidden md:table-cell whitespace-nowrap">
+                    {new Date(post.date).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </td>
+                  <td className="px-5 py-3">
+                    <div className="flex gap-1.5">
+                      {post.isBreaking && <Badge color="red">Breaking</Badge>}
+                      {post.featured && <Badge color="indigo">Featured</Badge>}
+                      {post.trending && <Badge color="amber">Trending</Badge>}
+                      {!post.isBreaking && !post.featured && !post.trending && (
+                        <span className="text-xs text-gray-400">—</span>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
@@ -87,32 +160,53 @@ function StatCard({
   label,
   value,
   icon: Icon,
+  accent,
 }: {
   label: string;
   value: number;
   icon: React.ComponentType<{ size?: number | string }>;
+  accent: "indigo" | "red" | "amber" | "emerald";
 }) {
+  const accentStyles = {
+    indigo: "bg-indigo-50 text-indigo-600",
+    red: "bg-red-50 text-red-600",
+    amber: "bg-amber-50 text-amber-600",
+    emerald: "bg-emerald-50 text-emerald-600",
+  };
+
   return (
-    <div className="bg-white border border-border rounded-lg p-4 flex items-center gap-3">
-      <div className="w-10 h-10 rounded-md bg-[var(--accent-gold)]/10 flex items-center justify-center text-[var(--accent-gold)]">
-        <Icon size={20} />
-      </div>
-      <div>
-        <p className="text-2xl font-bold text-text-dark">{value}</p>
-        <p className="text-xs text-text-muted">{label}</p>
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-5">
+      <div className="flex items-center gap-3">
+        <div
+          className={`w-10 h-10 rounded-lg flex items-center justify-center ${accentStyles[accent]}`}
+        >
+          <Icon size={20} />
+        </div>
+        <div>
+          <p className="text-2xl font-semibold text-gray-900">{value}</p>
+          <p className="text-xs text-gray-500">{label}</p>
+        </div>
       </div>
     </div>
   );
 }
 
-function Badge({ color, children }: { color: "red" | "gold" | "blue"; children: React.ReactNode }) {
+function Badge({
+  color,
+  children,
+}: {
+  color: "indigo" | "red" | "amber";
+  children: React.ReactNode;
+}) {
   const colors = {
-    red: "bg-red-100 text-red-700",
-    gold: "bg-amber-100 text-amber-700",
-    blue: "bg-blue-100 text-blue-700",
+    indigo: "bg-indigo-50 text-indigo-700",
+    red: "bg-red-50 text-red-700",
+    amber: "bg-amber-50 text-amber-700",
   };
   return (
-    <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${colors[color]}`}>
+    <span
+      className={`text-xs font-medium px-2 py-0.5 rounded-full ${colors[color]}`}
+    >
       {children}
     </span>
   );
