@@ -30,6 +30,15 @@ export type Post = {
   popular?: boolean;
 };
 
+export type TickerMessage = {
+  id: number;
+  message: string;
+  priority: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export const categories: Category[] = [
   "News",
   "Gossip",

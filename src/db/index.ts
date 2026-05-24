@@ -1,4 +1,4 @@
-import type { Post } from "@/data/types";
+import type { Post, TickerMessage } from "@/data/types";
 
 const BASE_URL = process.env.TURSO_DATABASE_URL!.replace(/^libsql:/, "https:");
 const AUTH_TOKEN = process.env.TURSO_AUTH_TOKEN!;
@@ -18,6 +18,7 @@ type TursoRow = TursoValue[];
 interface TursoResult {
   cols: TursoColumn[];
   rows: TursoRow[];
+  rowsAffected?: number;
 }
 
 interface TursoResponse {
@@ -63,14 +64,53 @@ function rowToPost(row: TursoRow): Post {
   };
 }
 
-function toTursoArg(val: string | number): TursoValue {
-  if (typeof val === "number") {
-    return { type: "integer", value: String(val) };
-  }
+function rowToTickerMessage(row: TursoRow): TickerMessage {
+  return {
+    id: Number(value(row, 0)!),
+    message: value(row, 1)!,
+    priority: Number(value(row, 2) ?? 0),
+    isActive: value(row, 3) === "1",
+    createdAt: value(row, 4)!,
+    updatedAt: value(row, 5)!,
+  };
+}
+
+function toTursoArg(val: string | number | null): TursoValue {
+  if (val === null) return { type: "null", value: "null" };
+  if (typeof val === "number") return { type: "integer", value: String(val) };
   return { type: "text", value: val };
 }
 
-async function query(sql: string, args: (string | number)[] = []): Promise<Post[]> {
+function postToArgs(post: Omit<Post, "slug"> & { slug?: string }): (string | number | null)[] {
+  return [
+    post.slug ?? null,
+    post.title,
+    post.subheadline ?? null,
+    post.excerpt,
+    post.author,
+    post.date,
+    post.readTime,
+    post.category,
+    JSON.stringify(post.tags),
+    post.image.src,
+    post.image.alt,
+    post.image.width ?? null,
+    post.image.height ?? null,
+    post.content,
+    post.isBreaking ? "1" : "0",
+    post.featured ? "1" : "0",
+    post.trending ? "1" : "0",
+    post.popular ? "1" : "0",
+  ];
+}
+
+const INSERT_POST_SQL = `INSERT INTO posts
+  (slug, title, subheadline, excerpt, author, date, read_time, category, tags,
+   image_src, image_alt, image_width, image_height, content,
+   is_breaking, featured, trending, popular)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+async function executeRaw(sql: string, args: (string | number | null)[] = []): Promise<TursoResult> {
   const stmt: { sql: string; args?: TursoValue[] } = { sql };
   if (args.length > 0) {
     stmt.args = args.map(toTursoArg);
@@ -83,7 +123,7 @@ async function query(sql: string, args: (string | number)[] = []): Promise<Post[
   const res = await fetch(`${BASE_URL}/v2/pipeline`, {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${AUTH_TOKEN}`,
+      Authorization: `Bearer ${AUTH_TOKEN}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
@@ -97,8 +137,23 @@ async function query(sql: string, args: (string | number)[] = []): Promise<Post[
   const result = data.results[0]?.response?.result;
   if (!result) throw new Error("No result from Turso pipeline");
 
+  return result;
+}
+
+async function executeWrite(
+  sql: string,
+  args: (string | number | null)[] = []
+): Promise<number> {
+  const result = await executeRaw(sql, args);
+  return result.rowsAffected ?? 0;
+}
+
+async function query(sql: string, args: (string | number)[] = []): Promise<Post[]> {
+  const result = await executeRaw(sql, args);
   return result.rows.map(rowToPost);
 }
+
+// ── Read functions (unchanged API) ──
 
 export async function getFeaturedPost(): Promise<Post | null> {
   const posts = await query("SELECT * FROM posts WHERE featured = 1 LIMIT 1");
@@ -160,4 +215,150 @@ export async function getAllPosts(): Promise<Post[]> {
 export async function getAllCategories(): Promise<string[]> {
   const posts = await query("SELECT DISTINCT category FROM posts ORDER BY category");
   return posts.map((p) => p.category);
+}
+
+// ── Post mutations ──
+
+function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/['']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+async function slugExists(slug: string): Promise<boolean> {
+  const result = await executeRaw("SELECT 1 FROM posts WHERE slug = ? LIMIT 1", [slug]);
+  return result.rows.length > 0;
+}
+
+export async function createPost(post: Omit<Post, "slug"> & { slug?: string }): Promise<Post> {
+  let slug = post.slug || slugify(post.title);
+
+  // Handle slug collisions
+  if (await slugExists(slug)) {
+    let suffix = 2;
+    let candidate = `${slug}-${suffix}`;
+    while (await slugExists(candidate)) {
+      suffix++;
+      candidate = `${slug}-${suffix}`;
+    }
+    slug = candidate;
+  }
+
+  const args = postToArgs({ ...post, slug });
+  await executeWrite(INSERT_POST_SQL, args);
+
+  const created = await getPostBySlug(slug);
+  if (!created) throw new Error("Failed to create post");
+  return created;
+}
+
+export async function updatePost(slug: string, updates: Partial<Post>): Promise<Post | null> {
+  const existing = await getPostBySlug(slug);
+  if (!existing) return null;
+
+  const merged = { ...existing, ...updates };
+  const args = [
+    merged.title,
+    merged.subheadline ?? null,
+    merged.excerpt,
+    merged.author,
+    merged.date,
+    merged.readTime,
+    merged.category,
+    JSON.stringify(merged.tags),
+    merged.image.src,
+    merged.image.alt,
+    merged.image.width ?? null,
+    merged.image.height ?? null,
+    merged.content,
+    merged.isBreaking ? "1" : "0",
+    merged.featured ? "1" : "0",
+    merged.trending ? "1" : "0",
+    merged.popular ? "1" : "0",
+    slug,
+  ];
+
+  await executeWrite(
+    `UPDATE posts SET
+      title = ?, subheadline = ?, excerpt = ?, author = ?, date = ?,
+      read_time = ?, category = ?, tags = ?,
+      image_src = ?, image_alt = ?, image_width = ?, image_height = ?,
+      content = ?, is_breaking = ?, featured = ?, trending = ?, popular = ?
+      WHERE slug = ?`,
+    args
+  );
+
+  return getPostBySlug(slug);
+}
+
+export async function deletePost(slug: string): Promise<boolean> {
+  const existing = await getPostBySlug(slug);
+  if (!existing) return false;
+  await executeWrite("DELETE FROM posts WHERE slug = ?", [slug]);
+  return true;
+}
+
+// ── Ticker messages ──
+
+export async function getTickerMessages(): Promise<TickerMessage[]> {
+  const result = await executeRaw(
+    "SELECT * FROM ticker_messages ORDER BY priority DESC, created_at DESC"
+  );
+  return result.rows.map(rowToTickerMessage);
+}
+
+export async function getActiveTickerMessages(): Promise<TickerMessage[]> {
+  const result = await executeRaw(
+    "SELECT * FROM ticker_messages WHERE is_active = 1 ORDER BY priority DESC, created_at DESC"
+  );
+  return result.rows.map(rowToTickerMessage);
+}
+
+export async function createTickerMessage(data: {
+  message: string;
+  priority?: number;
+}): Promise<TickerMessage> {
+  await executeWrite(
+    "INSERT INTO ticker_messages (message, priority) VALUES (?, ?)",
+    [data.message, data.priority ?? 0]
+  );
+
+  const result = await executeRaw(
+    "SELECT * FROM ticker_messages ORDER BY id DESC LIMIT 1"
+  );
+  return result.rows.map(rowToTickerMessage)[0];
+}
+
+export async function updateTickerMessage(
+  id: number,
+  data: { message?: string; priority?: number; isActive?: boolean }
+): Promise<TickerMessage | null> {
+  const existing = await executeRaw(
+    "SELECT * FROM ticker_messages WHERE id = ?", [id]
+  );
+  if (existing.rows.length === 0) return null;
+
+  const current = existing.rows.map(rowToTickerMessage)[0];
+  const message = data.message ?? current.message;
+  const priority = data.priority ?? current.priority;
+  const isActive = data.isActive !== undefined ? (data.isActive ? "1" : "0") : (current.isActive ? "1" : "0");
+
+  await executeWrite(
+    `UPDATE ticker_messages SET message = ?, priority = ?, is_active = ?, updated_at = datetime('now') WHERE id = ?`,
+    [message, priority, isActive, id]
+  );
+
+  const updated = await executeRaw("SELECT * FROM ticker_messages WHERE id = ?", [id]);
+  return updated.rows.map(rowToTickerMessage)[0];
+}
+
+export async function deleteTickerMessage(id: number): Promise<boolean> {
+  const existing = await executeRaw(
+    "SELECT * FROM ticker_messages WHERE id = ?", [id]
+  );
+  if (existing.rows.length === 0) return false;
+  await executeWrite("DELETE FROM ticker_messages WHERE id = ?", [id]);
+  return true;
 }

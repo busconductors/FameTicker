@@ -1,9 +1,16 @@
-import { getBreakingPosts } from "@/db";
+import { getActiveTickerMessages, getBreakingPosts } from "@/db";
 
 export default async function BreakingTicker() {
-  const breakingPosts = await getBreakingPosts(4);
+  const messages = await getActiveTickerMessages();
 
-  const tickerText = breakingPosts.map((p) => p.title).join("  •  ");
+  let tickerText: string;
+
+  if (messages.length > 0) {
+    tickerText = messages.map((m) => m.message).join("  •  ");
+  } else {
+    const breakingPosts = await getBreakingPosts(4);
+    tickerText = breakingPosts.map((p) => p.title).join("  •  ");
+  }
 
   if (!tickerText) return null;
 

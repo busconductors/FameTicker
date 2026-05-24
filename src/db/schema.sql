@@ -25,3 +25,12 @@ CREATE INDEX idx_posts_trending ON posts(trending);
 CREATE INDEX idx_posts_popular ON posts(popular);
 CREATE INDEX idx_posts_category ON posts(category);
 CREATE INDEX idx_posts_date ON posts(date);
+
+CREATE TABLE ticker_messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  message TEXT NOT NULL,
+  priority INTEGER NOT NULL DEFAULT 0,
+  is_active INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
