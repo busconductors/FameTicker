@@ -1,27 +1,37 @@
 "use client";
 
-import { useActionState, useRef } from "react";
+import { useState, useTransition, useRef } from "react";
 import { createTickerAction } from "../../../actions";
 
-const initState: { error?: string; success?: boolean } = {};
-
 export default function TickerForm() {
-  const [state, formAction, pending] = useActionState(
-    async (_prev: typeof initState, formData: FormData) => {
-      return createTickerAction(formData);
-    },
-    initState
-  );
+  const [error, setError] = useState<string>();
+  const [success, setSuccess] = useState(false);
+  const [pending, startTransition] = useTransition();
   const ref = useRef<HTMLFormElement>(null);
 
-  if (state?.success) {
+  if (success) {
     ref.current?.reset();
+    // Reset success so the form can be used again
+    setTimeout(() => setSuccess(false), 0);
+  }
+
+  function handleSubmit(formData: FormData) {
+    setError(undefined);
+    setSuccess(false);
+    startTransition(async () => {
+      const result = await createTickerAction(formData);
+      if (result?.error) {
+        setError(result.error);
+      } else if (result?.success) {
+        setSuccess(true);
+      }
+    });
   }
 
   return (
     <form
       ref={ref}
-      action={formAction}
+      action={handleSubmit}
       className="flex items-start gap-3"
     >
       <div className="flex-1">
@@ -32,8 +42,8 @@ export default function TickerForm() {
           placeholder="Breaking news message..."
           className="w-full rounded-md border border-border bg-white px-3 py-2 text-sm text-text-dark outline-none focus:ring-2 focus:ring-[var(--accent-gold)] focus:border-transparent"
         />
-        {state?.error && (
-          <p className="text-xs text-[var(--accent-red)] mt-1">{state.error}</p>
+        {error && (
+          <p className="text-xs text-[var(--accent-red)] mt-1">{error}</p>
         )}
       </div>
 

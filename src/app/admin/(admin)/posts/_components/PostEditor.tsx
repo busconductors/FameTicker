@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useState, useTransition } from "react";
 import type { Post } from "@/data/types";
 import { categories } from "@/data/types";
 import { createPostAction, updatePostAction } from "../../../actions";
@@ -9,27 +9,28 @@ interface PostEditorProps {
   post?: Post;
 }
 
-const initState: { error?: string } = {};
-
 export default function PostEditor({ post }: PostEditorProps) {
   const isEdit = !!post;
+  const [error, setError] = useState<string>();
+  const [pending, startTransition] = useTransition();
 
-  const createAction = async (_prev: typeof initState, formData: FormData) => {
-    return createPostAction(formData);
-  };
-
-  const editAction = async (_prev: typeof initState, formData: FormData) => {
-    return updatePostAction(post!.slug, formData);
-  };
-
-  const action = isEdit ? editAction : createAction;
-  const [state, formAction, pending] = useActionState(action, initState);
+  function handleSubmit(formData: FormData) {
+    setError(undefined);
+    startTransition(async () => {
+      const result = isEdit
+        ? await updatePostAction(post!.slug, formData)
+        : await createPostAction(formData);
+      if (result?.error) {
+        setError(result.error);
+      }
+    });
+  }
 
   return (
-    <form action={formAction} className="space-y-6">
-      {state?.error && (
+    <form action={handleSubmit} className="space-y-6">
+      {error && (
         <div className="rounded-md bg-red-50 border border-red-200 p-3 text-sm text-red-700">
-          {state.error}
+          {error}
         </div>
       )}
 
