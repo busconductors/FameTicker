@@ -11,12 +11,5 @@ export default async function EditPostPage({
   const post = await getPostBySlug(decodeURIComponent(id));
   if (!post) return notFound();
 
-  return (
-    <div>
-      <h2 className="text-2xl font-bold text-text-dark mb-6" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
-        Edit Post
-      </h2>
-      <PostEditor post={post} />
-    </div>
-  );
+  return <PostEditor post={post} />;
 }
