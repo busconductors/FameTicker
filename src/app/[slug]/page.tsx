@@ -20,10 +20,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: post.title,
       description: post.excerpt,
+      url: `https://fameticker.news/${post.slug}`,
       type: "article",
       publishedTime: post.date,
       authors: [post.author],
+      section: post.category,
       images: [{ url: post.image.src, alt: post.image.alt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [post.image.src],
     },
   };
 }
@@ -33,7 +41,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const post = posts.find((p) => p.slug === decodeURIComponent(slug));
   if (!post) return notFound();
 
-  const url = "https://fameticker.netlify.app/" + post.slug;
+  const url = "https://fameticker.news/" + post.slug;
 
   return (
     <article>

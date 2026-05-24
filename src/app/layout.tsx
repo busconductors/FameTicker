@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Playfair_Display, Bebas_Neue, DM_Sans } from "next/font/google";
+import { Playfair_Display, Bebas_Neue, DM_Sans, Cormorant_Garamond, Oswald } from "next/font/google";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import NewsletterPopup from "../components/NewsletterPopup";
@@ -24,14 +24,43 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-cormorant-garamond",
+  display: "swap",
+});
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
-    default: "The Tea — Celebrity News & Gossip",
-    template: "%s — The Tea",
+    default: "Fame Ticker — Celebrity News & Entertainment",
+    template: "%s — Fame Ticker",
   },
   description:
-    "Your premier destination for celebrity news, exclusive gossip, and entertainment updates. Music, Movies, Fashion, Relationships, Reality TV.",
-  metadataBase: new URL("https://fameticker.netlify.app"),
+    "Real-time celebrity intel. Breaking stories, red carpet coverage, and entertainment drama — delivered before it trends.",
+  keywords: "celebrity news, gossip, entertainment, music news, Hollywood, fashion, reality TV, celebrity relationships, fame ticker",
+  metadataBase: new URL("https://fameticker.news"),
+  openGraph: {
+    title: "Fame Ticker — Celebrity News & Entertainment",
+    description: "Real-time celebrity intel. Breaking stories, red carpet coverage, and entertainment drama.",
+    url: "https://fameticker.news",
+    siteName: "Fame Ticker",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fame Ticker — Celebrity News & Entertainment",
+    description: "Real-time celebrity intel. Breaking stories, red carpet coverage, and entertainment drama.",
+    images: ["/og-image.jpg"],
+  },
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://fameticker.news" },
 };
 
 export default function RootLayout({
@@ -40,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${bebas.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${bebas.variable} ${dmSans.variable} ${cormorantGaramond.variable} ${oswald.variable}`}>
       <body className="min-h-screen antialiased" style={{ fontFamily: "var(--font-dm-sans)" }}>
         <div className="flex min-h-screen flex-col">
           <Header />

@@ -25,10 +25,10 @@ export default function Footer() {
             className="text-lg font-bold uppercase tracking-[0.3em]"
             style={{ fontFamily: "var(--font-playfair)", color: "var(--accent-gold)" }}
           >
-            THE TEA
+            FAME TICKER
           </span>
           <p className="text-sm text-foreground/70">
-            Your premier destination for celebrity news, exclusive gossip, and entertainment updates. Always first. Always exclusive.
+            Real-time celebrity intel. Breaking stories, red carpet coverage, and entertainment drama — delivered before it trends. Always ticking.
           </p>
         </div>
         <div>
@@ -67,7 +67,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-border py-6 text-center text-xs text-foreground/50">
-        &copy; 2026 The Tea. All rights reserved.
+        &copy; 2026 Fame Ticker. All rights reserved.
       </div>
     </footer>
   );

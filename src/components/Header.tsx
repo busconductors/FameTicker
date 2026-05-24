@@ -50,7 +50,7 @@ export default function Header() {
               className="text-xl font-bold uppercase tracking-[0.3em]"
               style={{ fontFamily: "var(--font-playfair)", color: "var(--accent-gold)" }}
             >
-              THE TEA
+              FAME TICKER
             </span>
             <span
               className="text-[10px] uppercase tracking-[0.4em]"

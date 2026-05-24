@@ -45,7 +45,7 @@ export default function NewsletterPopup() {
             <h3 className="text-lg font-bold tracking-tight text-gold" style={{ fontFamily: "var(--font-playfair)" }}>
               Stay in the Loop
             </h3>
-            <p className="text-sm text-foreground/80">Get the hottest tea delivered to your inbox daily.</p>
+            <p className="text-sm text-foreground/80">Get the biggest scoops before anyone else.</p>
           </div>
           {status === "success" ? (
             <p className="text-sm font-semibold text-primary px-4">You&rsquo;re in!</p>

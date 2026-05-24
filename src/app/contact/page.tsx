@@ -41,7 +41,7 @@ export default function ContactPage() {
           className="mt-2 text-text-muted-dark max-w-2xl"
           style={{ fontFamily: "var(--font-dm-sans)" }}
         >
-          Have a tip, question, or partnership inquiry? Send us a message below.
+          Have a tip, question, or partnership inquiry? Reach out — we read every message.
         </p>
 
         {status === "success" ? (

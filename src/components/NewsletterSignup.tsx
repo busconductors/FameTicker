@@ -31,10 +31,10 @@ export default function NewsletterSignup() {
         className="text-xl font-bold tracking-wide text-gold"
         style={{ fontFamily: "var(--font-playfair)" }}
       >
-        The Tea
+        Fame Ticker
       </h3>
       <p className="mt-1 text-sm text-text-secondary">
-        Get the hottest tea delivered to your inbox daily.
+        Get the biggest scoops before anyone else.
       </p>
 
       {status === "success" ? (

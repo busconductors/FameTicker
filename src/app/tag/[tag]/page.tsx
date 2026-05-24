@@ -7,7 +7,7 @@ export async function generateMetadata({ params }: { params: Promise<{ tag: stri
   const tag = decodeURIComponent(rawTag);
   return {
     title: `#${tag}`,
-    description: `Articles tagged with #${tag} on Spill It Now.`,
+    description: `Articles tagged with #${tag} on Fame Ticker.`,
   };
 }
 

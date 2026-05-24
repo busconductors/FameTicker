@@ -4,7 +4,7 @@ import { posts } from "@/data";
 
 export const metadata: Metadata = {
   title: "Search",
-  description: "Search celebrity news, gossip, and entertainment updates on Spill It Now.",
+  description: "Search the latest celebrity news, gossip, and entertainment headlines on Fame Ticker.",
 };
 
 function stripAccents(s: string) {

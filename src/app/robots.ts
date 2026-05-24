@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://spillitnow.space/sitemap.xml",
+    sitemap: "https://fameticker.news/sitemap.xml",
   };
 }

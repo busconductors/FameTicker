@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { posts, categories } from "@/data";
 
-const BASE_URL = "https://spillitnow.space";
+const BASE_URL = "https://fameticker.news";
 
 const staticPages = ["", "/about", "/contact", "/privacy", "/terms", "/submit-tip", "/search"];
 

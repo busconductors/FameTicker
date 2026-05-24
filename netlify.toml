@@ -7,3 +7,25 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# 301 redirect old Netlify URL to custom domain
+[[redirects]]
+  from = "https://fameticker.netlify.app/*"
+  to = "https://fameticker.news/:splat"
+  status = 301
+  force = true
+
+# www to apex
+[[redirects]]
+  from = "https://www.fameticker.news/*"
+  to = "https://fameticker.news/:splat"
+  status = 301
+  force = true
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

@@ -35,13 +35,13 @@ export default function SubmitTipPage() {
           className="text-3xl sm:text-4xl font-bold text-text-dark"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
-          Submit a Tip
+          Tip the Ticker.
         </h1>
         <p
           className="mt-2 text-text-muted-dark max-w-2xl"
           style={{ fontFamily: "var(--font-dm-sans)" }}
         >
-          Got exclusive tea? Share it with us. Your identity will be kept confidential.
+          Know something? Drop it here. Anonymous tips welcome.
         </p>
 
         {status === "success" ? (
@@ -50,7 +50,7 @@ export default function SubmitTipPage() {
               className="text-sm font-semibold text-text-dark"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Tip received &mdash; thank you for the tea!
+              Tip received &mdash; we&rsquo;ll look into it.
             </p>
           </div>
         ) : (

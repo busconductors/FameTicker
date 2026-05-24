@@ -20,9 +20,9 @@ export const posts: Post[] = [
       height: 900,
     },
     content: `<p>Country music's rising star Tucker Wetmore finds himself at the center of an escalating legal battle that threatens to derail one of Nashville's most promising careers.</p>
-<p>According to court documents obtained exclusively by The Tea, Back Blocks Music has filed a breach-of-contract lawsuit against Wetmore, alleging that the singer attempted to terminate his management agreement prematurely and without proper legal grounds.</p>
+<p>According to court documents obtained exclusively by Fame Ticker, Back Blocks Music has filed a breach-of-contract lawsuit against Wetmore, alleging that the singer attempted to terminate his management agreement prematurely and without proper legal grounds.</p>
 <p>The lawsuit, filed in Davidson County Circuit Court on May 14, claims Wetmore signed a multi-year management deal in 2024 that included standard industry provisions for commission on all entertainment earnings. Sources close to the situation say the dispute centers on disagreements over creative direction and financial transparency.</p>
-<p>"This is a clear-cut case of a contractual obligation," a representative for Back Blocks Music told The Tea. "We supported Tucker from the very beginning, and we intend to enforce our agreement."</p>
+<p>"This is a clear-cut case of a contractual obligation," a representative for Back Blocks Music told Fame Ticker. "We supported Tucker from the very beginning, and we intend to enforce our agreement."</p>
 <p>Wetmore's legal team has not yet filed a formal response but released a statement suggesting the contract contained "unconscionable terms" that no emerging artist should be bound by.</p>
 <p>Industry insiders say the case could have broader implications for how management contracts are structured in Nashville, particularly for young artists who sign deals before achieving mainstream success.</p>`,
     isBreaking: true,
