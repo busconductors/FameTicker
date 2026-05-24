@@ -1,4 +1,7 @@
+import Link from "next/link";
+import BreakingTicker from "../components/BreakingTicker";
 import Hero from "../components/Hero";
+import TrendingNow from "../components/TrendingNow";
 import ArticleCard from "../components/ArticleCard";
 import Sidebar from "../components/Sidebar";
 import { posts, type Category } from "@/data";
@@ -18,11 +21,13 @@ export default function Home() {
 
   return (
     <>
+      <BreakingTicker />
       <Hero />
 
-      <section className="container mx-auto grid gap-8 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+      {/* Trending Now + Latest Stories row */}
+      <section className="container mx-auto grid gap-8 px-4 py-10 sm:px-6 lg:grid-cols-12 lg:px-8">
         <div className="lg:col-span-8">
-          <h2 className="mb-4 text-xl font-black" style={{ fontFamily: "var(--font-bebas)" }}>
+          <h2 className="section-header" style={{ fontFamily: "var(--font-bebas)" }}>
             Latest Stories
           </h2>
           <div className="grid gap-5 sm:grid-cols-2">
@@ -31,28 +36,35 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-4 space-y-8">
+          <TrendingNow />
           <Sidebar />
         </div>
       </section>
 
-      {sections.map((s) => (
-        <section key={s.key} className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
-          <div className="mb-4 flex items-end justify-between">
-            <h2 className="text-xl font-black" style={{ fontFamily: "var(--font-bebas)" }}>
-              {s.title}
-            </h2>
-            <a className="text-sm font-semibold hover:underline" href={`/category/${encodeURIComponent(s.key)}`}>
-              View all
-            </a>
-          </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {posts
-              .filter((p) => p.category === s.key)
-              .slice(0, 4)
-              .map((post) => (
-                <ArticleCard key={post.slug} post={post} />
-              ))}
+      {/* Category sections with alternating cream backgrounds */}
+      {sections.map((s, idx) => (
+        <section key={s.key} className={idx % 2 === 0 ? "bg-cream" : "bg-cream-warm"}>
+          <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
+            <div className="mb-6 flex items-end justify-between">
+              <h2 className="section-header" style={{ fontFamily: "var(--font-bebas)" }}>
+                {s.title}
+              </h2>
+              <Link
+                href={`/category/${encodeURIComponent(s.key)}`}
+                className="text-sm font-semibold text-text-dark hover:underline"
+              >
+                View all →
+              </Link>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {posts
+                .filter((p) => p.category === s.key)
+                .slice(0, 4)
+                .map((post) => (
+                  <ArticleCard key={post.slug} post={post} />
+                ))}
+            </div>
           </div>
         </section>
       ))}

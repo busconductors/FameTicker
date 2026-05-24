@@ -25,22 +25,29 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
   return (
     <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
-      <h1 className="mb-4 text-3xl font-black" style={{ fontFamily: "var(--font-bebas)" }}>
+      <h1
+        className="mb-4 text-3xl font-bold text-foreground"
+        style={{ fontFamily: "var(--font-playfair)" }}
+      >
         Search
       </h1>
+
       <form action="/search" className="mb-6 max-w-xl">
         <input
           type="text"
           name="q"
           defaultValue={q}
           placeholder="Search gossip..."
-          className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+          className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-gold"
         />
       </form>
 
       {q && (
-        <p className="mb-4 text-sm text-foreground/70">
-          {results.length} result{results.length === 1 ? "" : "s"} for "{q}"
+        <p
+          className="mb-4 text-sm text-text-secondary"
+          style={{ fontFamily: "var(--font-dm-sans)" }}
+        >
+          {results.length} result{results.length === 1 ? "" : "s"} for &quot;{q}&quot;
         </p>
       )}
 

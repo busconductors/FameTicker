@@ -4,82 +4,35 @@
 
 @layer base {
   :root {
-    /* Spill It Now palette */
-    --background: 42 33% 96%; /* #f6f2eb */
-    --foreground: 10 7% 12%; /* #1a1514 */
-
-    --card: 0 0% 100%;
-    --card-foreground: 10 7% 12%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 10 7% 12%;
-
-    --primary: 3 47% 44%; /* #a33f3b pink-red */
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 27 43% 47%; /* #bb9340 gold-ish for accents */
-    --secondary-foreground: 10 7% 12%;
-
-    --muted: 24 12% 86%; /* warm gray */
-    --muted-foreground: 20 6% 35%;
-
-    --accent: 173 93% 38%; /* #06bda5 teal accent */
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 24 12% 86%;
-    --input: 24 12% 86%;
-    --ring: 3 47% 44%;
-
-    --radius: 0.625rem; /* 10px */
-
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-
-    --shadow-color: 10 10% 10% / 0.12;
+    --bg-primary: #0D0D0D;
+    --bg-secondary: #1A1A1A;
+    --bg-cream: #FDF5E6;
+    --bg-warm: #F5EDE0;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B8B8B8;
+    --text-dark: #1A1A1A;
+    --text-muted-dark: #6B6B6B;
+    --accent-gold: #C8A96E;
+    --accent-red: #D4382C;
+    --accent-red-dark: #B22222;
+    --tag-bg: #2A2A2A;
+    --border-gold: rgba(200, 169, 110, 0.2);
+    --breaking-green: #22C55E;
+    --radius: 0.625rem;
   }
 
-  .dark {
-    --background: 10 7% 7%; /* near black with warm tint */
-    --foreground: 0 0% 98%;
-    --card: 10 7% 9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 10 7% 9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 341 69% 49%; /* deeper magenta-pink */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 42 40% 55%;
-    --secondary-foreground: 10 7% 9%;
-    --muted: 10 7% 15%;
-    --muted-foreground: 27 6% 65%;
-    --accent: 173 93% 40%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 10 7% 18%;
-    --input: 10 7% 18%;
-    --ring: 341 69% 49%;
-  }
-}
-
-@layer base {
   * {
-    @apply border-border;
+    border-color: hsl(0 0% 20%);
   }
-  html:focus-within {
+
+  html {
     scroll-behavior: smooth;
   }
+
   body {
-    @apply bg-background text-foreground antialiased;
-    font-feature-settings: "liga" 1, "tnum" 1, "ss01" 1;
-  }
-  a {
-    @apply text-primary underline-offset-4 hover:underline;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-feature-settings: "liga" 1, "tnum" 1;
   }
 }
 
@@ -87,19 +40,61 @@
   .container-px {
     @apply px-4 sm:px-6 lg:px-8;
   }
+
   .shadow-elevated {
-    box-shadow: 0 10px 25px hsl(var(--shadow-color));
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
-  .btn {
-    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
-  }
+
   .btn-primary {
-    @apply btn bg-primary text-primary-foreground hover:opacity-90;
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold;
+    background-color: var(--accent-gold);
+    color: #0D0D0D;
   }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+
   .btn-secondary {
-    @apply btn bg-secondary text-secondary-foreground hover:opacity-90;
+    @apply inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-semibold;
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
   }
-  .badge {
-    @apply inline-flex items-center rounded-full border border-border bg-card/50 px-2 py-0.5 text-xs font-medium text-foreground/80;
+
+  .btn-secondary:hover {
+    background-color: rgba(200, 169, 110, 0.1);
   }
+
+  .section-header {
+    @apply mb-4 flex items-center gap-4;
+    font-family: var(--font-bebas);
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dark);
+  }
+
+  .section-header::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--accent-gold);
+    opacity: 0.4;
+  }
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: ticker-scroll 25s linear infinite;
+  white-space: nowrap;
+  display: inline-block;
 }

@@ -14,7 +14,7 @@ export type Post = {
   excerpt: string;
   author: string;
   date: string; // ISO string
-  readTime: number; // minutes
+  readTime: string; // e.g. "6 min read"
   category: Category;
   tags: string[];
   image: {
@@ -23,7 +23,8 @@ export type Post = {
     width?: number;
     height?: number;
   };
-  content: string[]; // paragraphs / embeds markdown-ish
+  content: string; // HTML body
+  isBreaking?: boolean;
   featured?: boolean;
   trending?: boolean;
   popular?: boolean;

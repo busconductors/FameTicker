@@ -24,10 +24,20 @@ export default async function CategoryPage({ params }: { params: Promise<{ name:
   if (!cat) {
     return (
       <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-black" style={{ fontFamily: "var(--font-bebas)" }}>
-          Category Not Found
-        </h1>
-        <p className="mt-2">We couldn't find that category.</p>
+        <section className="bg-cream rounded-md p-6 sm:p-8">
+          <h1
+            className="text-3xl sm:text-4xl font-bold text-text-dark"
+            style={{ fontFamily: "var(--font-playfair)" }}
+          >
+            Category Not Found
+          </h1>
+          <p
+            className="mt-2 text-text-muted-dark"
+            style={{ fontFamily: "var(--font-dm-sans)" }}
+          >
+            We couldn&apos;t find that category.
+          </p>
+        </section>
       </div>
     );
   }
@@ -37,18 +47,36 @@ export default async function CategoryPage({ params }: { params: Promise<{ name:
   return (
     <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-6 flex items-end justify-between">
-        <h1 className="text-3xl font-black" style={{ fontFamily: "var(--font-bebas)" }}>
-          {cat}
-        </h1>
-        <Link href="/" className="text-sm font-semibold hover:underline">
+        <div>
+          <h1
+            className="text-4xl font-bold text-gold"
+            style={{ fontFamily: "var(--font-playfair)" }}
+          >
+            {cat}
+          </h1>
+          <p
+            className="text-text-muted-dark text-sm"
+            style={{ fontFamily: "var(--font-dm-sans)" }}
+          >
+            {items.length} article{items.length === 1 ? "" : "s"}
+          </p>
+        </div>
+        <Link
+          href="/"
+          className="text-sm text-text-muted-dark hover:text-text-dark"
+          style={{ fontFamily: "var(--font-dm-sans)" }}
+        >
           Home
         </Link>
       </div>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((post) => (
-          <ArticleCard key={post.slug} post={post} />
-        ))}
-      </div>
+
+      <section className="bg-cream rounded-md p-6">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map((post) => (
+            <ArticleCard key={post.slug} post={post} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

@@ -16,7 +16,7 @@ export default function ErrorPage({
 
   return (
     <div className="container mx-auto flex flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:px-8">
-      <h1 className="text-6xl font-black" style={{ fontFamily: "var(--font-bebas)" }}>
+      <h1 className="text-6xl font-bold text-foreground" style={{ fontFamily: "var(--font-playfair)" }}>
         Oops!
       </h1>
       <p className="mt-4 max-w-md text-foreground/80">

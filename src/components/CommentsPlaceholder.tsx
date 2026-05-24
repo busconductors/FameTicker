@@ -1,7 +1,7 @@
 export default function CommentsPlaceholder() {
   return (
     <section className="mt-12 rounded-xl border border-border bg-card p-6 text-sm text-foreground/80">
-      <h3 className="mb-2 text-lg font-black" style={{ fontFamily: "var(--font-bebas)" }}>
+      <h3 className="mb-2 text-lg font-bold text-text-dark" style={{ fontFamily: "var(--font-playfair)" }}>
         Comments
       </h3>
       <p>

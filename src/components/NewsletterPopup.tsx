@@ -42,7 +42,7 @@ export default function NewsletterPopup() {
       <div className="rounded-xl border border-border bg-card p-4 shadow-elevated">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="text-lg font-extrabold tracking-tight" style={{ fontFamily: "var(--font-bebas)" }}>
+            <h3 className="text-lg font-bold tracking-tight text-gold" style={{ fontFamily: "var(--font-playfair)" }}>
               Stay in the Loop
             </h3>
             <p className="text-sm text-foreground/80">Get the hottest tea delivered to your inbox daily.</p>

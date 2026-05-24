@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X, Sun, Moon, Search } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "../lib/utils";
-import { LS_THEME } from "../lib/constants";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -20,12 +19,6 @@ const nav = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const [dark, setDark] = useState(() => {
-    if (typeof document !== "undefined") {
-      return document.documentElement.classList.contains("dark");
-    }
-    return false;
-  });
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -34,12 +27,6 @@ export default function Header() {
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (dark) root.classList.add("dark");
-    else root.classList.remove("dark");
-  }, [dark]);
 
   return (
     <header
@@ -58,12 +45,18 @@ export default function Header() {
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
-          <Link href="/" className="flex items-end gap-2">
-            <span className="font-black tracking-tight text-3xl leading-none" style={{ fontFamily: "var(--font-bebas)" }}>
-              SPILL IT NOW
-            </span>
-            <span className="rounded-sm bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">
+          <Link href="/" className="flex flex-col leading-none">
+            <span
+              className="text-xl font-bold uppercase tracking-[0.3em]"
+              style={{ fontFamily: "var(--font-playfair)", color: "var(--accent-gold)" }}
+            >
               THE TEA
+            </span>
+            <span
+              className="text-[10px] uppercase tracking-[0.4em]"
+              style={{ color: "var(--accent-gold)" }}
+            >
+              CELEBRITY NEWS
             </span>
           </Link>
         </div>
@@ -73,44 +66,18 @@ export default function Header() {
             <Link
               key={n.href}
               href={n.href}
-              className="text-sm font-semibold tracking-wide text-foreground/80 hover:text-foreground"
+              className="text-xs font-semibold uppercase tracking-wider text-foreground/80 hover:text-foreground"
             >
               {n.label}
             </Link>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <form action="/search" className="hidden items-center gap-2 sm:flex">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 text-foreground/50" size={16} />
-              <input
-                type="text"
-                name="q"
-                placeholder="Search gossip..."
-                className="w-48 rounded-md border border-border bg-card py-1.5 pl-8 pr-2 text-sm outline-none focus:ring-2 focus:ring-ring"
-              />
-            </div>
-          </form>
-          <button
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border hover:bg-muted"
-            aria-label="Toggle dark mode"
-            onClick={() =>
-              setDark((d) => {
-                const next = !d;
-                try { localStorage.setItem(LS_THEME, next ? "dark" : "light"); } catch {}
-                return next;
-              })
-            }
-          >
-            {dark ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-        </div>
+        <div className="md:hidden w-9" />
       </div>
 
-      {/* Mobile nav */}
       {open && (
-        <div className="md:hidden border-t border-border bg-background/95">
+        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur">
           <nav className="container mx-auto grid gap-2 px-4 py-3 sm:px-6 lg:px-8">
             {nav.map((n) => (
               <Link

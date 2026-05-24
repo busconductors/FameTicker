@@ -1,30 +1,47 @@
 import Link from "next/link";
 
+const categories = [
+  { href: "/category/Music", label: "Music" },
+  { href: "/category/Movies", label: "Movies" },
+  { href: "/category/Relationships", label: "Relationships" },
+  { href: "/category/Fashion", label: "Fashion" },
+  { href: "/category/Reality%20TV", label: "Reality TV" },
+];
+
+const navigateLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
+];
+
 export default function Footer() {
-  const year = new Date().getFullYear();
   return (
-    <footer className="mt-16 border-t border-border bg-card/40">
-      <div className="container mx-auto grid grid-cols-1 gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4 sm:px-6 lg:px-8">
+    <footer className="mt-16 border-t border-border bg-card">
+      <div className="container mx-auto grid grid-cols-1 gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-3 sm:px-6 lg:px-8">
         <div className="space-y-3">
-          <h3 className="text-xl font-black tracking-tight" style={{ fontFamily: "var(--font-bebas)" }}>
+          <span
+            className="text-lg font-bold uppercase tracking-[0.3em]"
+            style={{ fontFamily: "var(--font-playfair)", color: "var(--accent-gold)" }}
+          >
             THE TEA
-          </h3>
-          <p className="text-sm text-foreground/80">
+          </span>
+          <p className="text-sm text-foreground/70">
             Your premier destination for celebrity news, exclusive gossip, and entertainment updates. Always first. Always exclusive.
           </p>
         </div>
         <div>
-          <h4 className="mb-3 font-semibold">Categories</h4>
-          <ul className="space-y-2 text-sm">
-            {[
-              ["/category/Music", "Music"],
-              ["/category/Movies", "Movies"],
-              ["/category/Relationships", "Relationships"],
-              ["/category/Fashion", "Fashion"],
-              ["/category/Reality%20TV", "Reality TV"],
-            ].map(([href, label]) => (
+          <h4
+            className="tracking-widest uppercase text-sm font-bold mb-3"
+            style={{ color: "var(--accent-gold)" }}
+          >
+            Categories
+          </h4>
+          <ul className="space-y-3 text-sm">
+            {categories.map(({ href, label }) => (
               <li key={href}>
-                <Link className="hover:underline" href={href as string}>
+                <Link className="text-foreground/70 hover:text-foreground" href={href}>
                   {label}
                 </Link>
               </li>
@@ -32,40 +49,25 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <h4 className="mb-3 font-semibold">Navigate</h4>
-          <ul className="space-y-2 text-sm">
-            {[
-              ["/", "Home"],
-              ["/about", "About"],
-              ["/contact", "Contact"],
-              ["/privacy", "Privacy"],
-              ["/terms", "Terms"],
-            ].map(([href, label]) => (
+          <h4
+            className="tracking-widest uppercase text-sm font-bold mb-3"
+            style={{ color: "var(--accent-gold)" }}
+          >
+            Navigate
+          </h4>
+          <ul className="space-y-3 text-sm">
+            {navigateLinks.map(({ href, label }) => (
               <li key={href}>
-                <Link className="hover:underline" href={href as string}>
+                <Link className="text-foreground/70 hover:text-foreground" href={href}>
                   {label}
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
-        <div>
-          <h4 className="mb-3 font-semibold">Follow</h4>
-          <div className="flex gap-3 text-sm">
-            <Link href="#" aria-label="Instagram" className="rounded-md bg-secondary px-3 py-1 font-semibold text-secondary-foreground hover:opacity-90">
-              Instagram
-            </Link>
-            <Link href="#" aria-label="Twitter" className="rounded-md bg-secondary px-3 py-1 font-semibold text-secondary-foreground hover:opacity-90">
-              X
-            </Link>
-            <Link href="#" aria-label="TikTok" className="rounded-md bg-secondary px-3 py-1 font-semibold text-secondary-foreground hover:opacity-90">
-              TikTok
-            </Link>
-          </div>
         </div>
       </div>
-      <div className="border-t border-border py-6 text-center text-xs text-foreground/70">
-        © {year} The Tea. All rights reserved.
+      <div className="border-t border-border py-6 text-center text-xs text-foreground/50">
+        &copy; 2026 The Tea. All rights reserved.
       </div>
     </footer>
   );
