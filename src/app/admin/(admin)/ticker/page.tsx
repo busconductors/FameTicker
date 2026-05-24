@@ -6,32 +6,48 @@ export default async function TickerPage() {
   const messages = await getTickerMessages();
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold text-text-dark mb-6" style={{ fontFamily: "var(--font-cormorant-garamond)" }}>
-        Breaking Ticker
-      </h2>
+    <div className="max-w-6xl">
+      {/* ── Header ── */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-900">Ticker</h1>
+          <p className="text-sm text-gray-500 mt-1">{messages.length} messages</p>
+        </div>
+      </div>
 
-      <div className="mb-8">
-        <h3 className="text-sm font-medium text-text-dark mb-3">Add Message</h3>
+      {/* ── Add Message Card ── */}
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-5 mb-6">
+        <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
+          Add Message
+        </h2>
         <TickerForm />
       </div>
 
-      <h3 className="text-sm font-medium text-text-dark mb-3">
-        Messages ({messages.length})
-      </h3>
-
-      {messages.length === 0 ? (
-        <p className="text-sm text-text-muted">No ticker messages yet. Add one above.</p>
-      ) : (
-        <div className="bg-white border border-border rounded-lg overflow-hidden">
+      {/* ── Messages Table ── */}
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+        {messages.length === 0 ? (
+          <div className="px-5 py-12 text-center">
+            <p className="text-sm text-gray-500">No ticker messages yet. Add one above.</p>
+          </div>
+        ) : (
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-border">
-              <tr>
-                <th className="text-left px-4 py-2.5 font-medium text-text-muted">Message</th>
-                <th className="text-left px-4 py-2.5 font-medium text-text-muted w-20">Priority</th>
-                <th className="text-left px-4 py-2.5 font-medium text-text-muted w-20">Active</th>
-                <th className="text-left px-4 py-2.5 font-medium text-text-muted w-20">Created</th>
-                <th className="text-right px-4 py-2.5 font-medium text-text-muted w-24">Actions</th>
+            <thead>
+              <tr className="border-b border-gray-100">
+                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Message
+                </th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-20">
+                  Priority
+                </th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-24 hidden sm:table-cell">
+                  Status
+                </th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-24 hidden md:table-cell">
+                  Created
+                </th>
+                <th className="text-right px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-24">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -40,8 +56,8 @@ export default async function TickerPage() {
               ))}
             </tbody>
           </table>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
