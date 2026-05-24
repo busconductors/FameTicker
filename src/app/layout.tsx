@@ -5,6 +5,7 @@ import PublicChrome from "../components/PublicChrome";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import NewsletterPopup from "../components/NewsletterPopup";
+import BreakingTicker from "../components/BreakingTicker";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -66,7 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${bebas.variable} ${dmSans.variable} ${cormorantGaramond.variable} ${oswald.variable}`}>
       <body className="min-h-screen antialiased" style={{ fontFamily: "var(--font-dm-sans)" }}>
-        <PublicChrome header={<Header />} footer={<Footer />}>{children}</PublicChrome>
+        <PublicChrome header={<Header />} footer={<Footer />} ticker={<BreakingTicker />}>{children}</PublicChrome>
         <NewsletterPopup />
       </body>
     </html>

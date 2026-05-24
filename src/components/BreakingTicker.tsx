@@ -1,18 +1,11 @@
-import { getActiveTickerMessages, getBreakingPosts } from "@/db";
+import { getActiveTickerMessages } from "@/db";
 
 export default async function BreakingTicker() {
   const messages = await getActiveTickerMessages();
 
-  let tickerText: string;
+  if (messages.length === 0) return null;
 
-  if (messages.length > 0) {
-    tickerText = messages.map((m) => m.message).join("  •  ");
-  } else {
-    const breakingPosts = await getBreakingPosts(4);
-    tickerText = breakingPosts.map((p) => p.title).join("  •  ");
-  }
-
-  if (!tickerText) return null;
+  const tickerText = messages.map((m) => m.message).join("  •  ");
 
   return (
     <div className="ticker-bar">
@@ -20,7 +13,7 @@ export default async function BreakingTicker() {
         className="ticker-label"
         style={{ fontFamily: "var(--font-oswald)" }}
       >
-        BREAKING
+        BREAKING NEWS
       </span>
       <div className="ticker-track">
         <span

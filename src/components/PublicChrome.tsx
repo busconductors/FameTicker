@@ -6,10 +6,12 @@ export default function PublicChrome({
   children,
   header,
   footer,
+  ticker,
 }: {
   children: React.ReactNode;
   header: React.ReactNode;
   footer: React.ReactNode;
+  ticker?: React.ReactNode;
 }) {
   const pathname = usePathname();
 
@@ -20,6 +22,7 @@ export default function PublicChrome({
   return (
     <div className="flex min-h-screen flex-col">
       {header}
+      {ticker}
       <main className="flex-1">{children}</main>
       {footer}
     </div>

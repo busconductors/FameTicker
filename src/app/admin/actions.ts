@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createSession, clearSession, validateSession } from "@/lib/auth";
+import { clearSession, validateSession } from "@/lib/auth";
 import {
   createPost,
   updatePost,
@@ -11,7 +11,7 @@ import {
   updateTickerMessage,
   deleteTickerMessage,
 } from "@/db";
-import type { Category } from "@/data/types";
+import { categories, type Category } from "@/data/types";
 
 // ── Helpers ──
 
@@ -52,18 +52,111 @@ function parseFormImage(formData: FormData) {
   };
 }
 
-// ── Auth actions ──
+// ── Validation constants ──
 
-export async function login(formData: FormData): Promise<{ error?: string }> {
-  const password = parseFormString(formData, "password");
+const VALID_CATEGORIES: readonly string[] = categories;
 
-  if (password !== process.env.ADMIN_PASSWORD) {
-    return { error: "Invalid password" };
+const POST_LIMITS = {
+  title: 200,
+  slug: 200,
+  subheadline: 300,
+  excerpt: 500,
+  author: 150,
+  readTime: 50,
+  content: 100_000,
+  imageSrc: 2048,
+  imageAlt: 300,
+  maxTags: 10,
+  maxTagLength: 50,
+} as const;
+
+const TICKER_MESSAGE_MAX = 280;
+
+// ── Validation functions ──
+
+const SLUG_RE = /^[a-z0-9-]+$/;
+
+function validatePostFields(data: {
+  title: string;
+  slug?: string;
+  subheadline?: string;
+  excerpt: string;
+  author: string;
+  date: string;
+  readTime: string;
+  category: string;
+  tags: string[];
+  content: string;
+  imageSrc: string;
+  imageAlt: string;
+}): string | null {
+  const title = data.title.trim();
+  if (!title) return "Title is required";
+  if (title.length > POST_LIMITS.title) return `Title must be at most ${POST_LIMITS.title} characters`;
+
+  if (data.slug !== undefined) {
+    if (data.slug.length > POST_LIMITS.slug) return `Slug must be at most ${POST_LIMITS.slug} characters`;
+    if (!SLUG_RE.test(data.slug)) return "Slug must contain only lowercase letters, numbers, and hyphens";
   }
 
-  await createSession(password);
-  redirect("/admin");
+  if (data.subheadline !== undefined && data.subheadline.length > POST_LIMITS.subheadline) {
+    return `Subheadline must be at most ${POST_LIMITS.subheadline} characters`;
+  }
+
+  const excerpt = data.excerpt.trim();
+  if (!excerpt) return "Excerpt is required";
+  if (excerpt.length > POST_LIMITS.excerpt) return `Excerpt must be at most ${POST_LIMITS.excerpt} characters`;
+
+  const author = data.author.trim();
+  if (!author) return "Author is required";
+  if (author.length > POST_LIMITS.author) return `Author must be at most ${POST_LIMITS.author} characters`;
+
+  if (!data.date) return "Date is required";
+  if (isNaN(Date.parse(data.date))) return "Date must be a valid ISO 8601 date";
+
+  const readTime = data.readTime.trim();
+  if (!readTime) return "Read time is required";
+  if (readTime.length > POST_LIMITS.readTime) return `Read time must be at most ${POST_LIMITS.readTime} characters`;
+
+  if (!VALID_CATEGORIES.includes(data.category)) {
+    return `Category must be one of: ${VALID_CATEGORIES.join(", ")}`;
+  }
+
+  if (!Array.isArray(data.tags)) return "Tags must be an array";
+  if (data.tags.length > POST_LIMITS.maxTags) return `At most ${POST_LIMITS.maxTags} tags allowed`;
+  for (let i = 0; i < data.tags.length; i++) {
+    const tag = data.tags[i];
+    if (!tag || tag.trim() === "") return `Tag ${i + 1} must not be empty`;
+    if (tag.length > POST_LIMITS.maxTagLength) return `Tag ${i + 1} must be at most ${POST_LIMITS.maxTagLength} characters`;
+  }
+
+  if (data.content.length > POST_LIMITS.content) return `Content must be at most ${POST_LIMITS.content.toLocaleString()} characters`;
+
+  const imageSrc = data.imageSrc.trim();
+  if (!imageSrc) return "Image URL is required";
+  if (imageSrc.length > POST_LIMITS.imageSrc) return `Image URL must be at most ${POST_LIMITS.imageSrc} characters`;
+
+  const imageAlt = data.imageAlt.trim();
+  if (!imageAlt) return "Image alt text is required";
+  if (imageAlt.length > POST_LIMITS.imageAlt) return `Image alt text must be at most ${POST_LIMITS.imageAlt} characters`;
+
+  return null;
 }
+
+function validateTickerFields(data: {
+  message: string;
+  priority: number;
+}): string | null {
+  const message = data.message.trim();
+  if (!message) return "Message is required";
+  if (message.length > TICKER_MESSAGE_MAX) return `Message must be at most ${TICKER_MESSAGE_MAX} characters`;
+
+  if (!Number.isFinite(data.priority)) return "Priority must be a finite integer";
+
+  return null;
+}
+
+// ── Auth actions ──
 
 export async function logout(): Promise<void> {
   await clearSession();
@@ -76,21 +169,46 @@ export async function createPostAction(formData: FormData): Promise<{ error?: st
   await requireAuthOrRedirect("/admin/posts/new");
 
   const title = parseFormString(formData, "title");
-  if (!title) return { error: "Title is required" };
+  const slug = parseFormOptional(formData, "slug");
+  const subheadline = parseFormOptional(formData, "subheadline");
+  const excerpt = parseFormString(formData, "excerpt");
+  const author = parseFormString(formData, "author");
+  const date = parseFormString(formData, "date");
+  const readTime = parseFormString(formData, "readTime");
+  const category = parseFormString(formData, "category");
+  const tags = parseFormTags(formData);
+  const image = parseFormImage(formData);
+  const content = parseFormString(formData, "content");
+
+  const validationError = validatePostFields({
+    title,
+    slug,
+    subheadline,
+    excerpt,
+    author,
+    date,
+    readTime,
+    category,
+    tags,
+    content,
+    imageSrc: image.src,
+    imageAlt: image.alt,
+  });
+  if (validationError) return { error: validationError };
 
   try {
     await createPost({
-      slug: parseFormOptional(formData, "slug"),
+      slug,
       title,
-      subheadline: parseFormOptional(formData, "subheadline"),
-      excerpt: parseFormString(formData, "excerpt"),
-      author: parseFormString(formData, "author"),
-      date: parseFormString(formData, "date"),
-      readTime: parseFormString(formData, "readTime"),
-      category: parseFormString(formData, "category") as Category,
-      tags: parseFormTags(formData),
-      image: parseFormImage(formData),
-      content: parseFormString(formData, "content"),
+      subheadline,
+      excerpt,
+      author,
+      date,
+      readTime,
+      category: category as Category,
+      tags,
+      image,
+      content,
       isBreaking: parseFormBool(formData, "isBreaking"),
       featured: parseFormBool(formData, "featured"),
       trending: parseFormBool(formData, "trending"),
@@ -112,20 +230,44 @@ export async function updatePostAction(
   await requireAuthOrRedirect(`/admin/posts/${slug}/edit`);
 
   const title = parseFormString(formData, "title");
-  if (!title) return { error: "Title is required" };
+  const subheadline = parseFormOptional(formData, "subheadline");
+  const excerpt = parseFormString(formData, "excerpt");
+  const author = parseFormString(formData, "author");
+  const date = parseFormString(formData, "date");
+  const readTime = parseFormString(formData, "readTime");
+  const category = parseFormString(formData, "category");
+  const tags = parseFormTags(formData);
+  const image = parseFormImage(formData);
+  const content = parseFormString(formData, "content");
+
+  const validationError = validatePostFields({
+    title,
+    slug: undefined, // slug is not updatable via this action
+    subheadline,
+    excerpt,
+    author,
+    date,
+    readTime,
+    category,
+    tags,
+    content,
+    imageSrc: image.src,
+    imageAlt: image.alt,
+  });
+  if (validationError) return { error: validationError };
 
   try {
     await updatePost(slug, {
       title,
-      subheadline: parseFormOptional(formData, "subheadline"),
-      excerpt: parseFormString(formData, "excerpt"),
-      author: parseFormString(formData, "author"),
-      date: parseFormString(formData, "date"),
-      readTime: parseFormString(formData, "readTime"),
-      category: parseFormString(formData, "category") as Category,
-      tags: parseFormTags(formData),
-      image: parseFormImage(formData),
-      content: parseFormString(formData, "content"),
+      subheadline,
+      excerpt,
+      author,
+      date,
+      readTime,
+      category: category as Category,
+      tags,
+      image,
+      content,
       isBreaking: parseFormBool(formData, "isBreaking"),
       featured: parseFormBool(formData, "featured"),
       trending: parseFormBool(formData, "trending"),
@@ -163,12 +305,15 @@ export async function createTickerAction(formData: FormData): Promise<{ error?: 
   await requireAuthOrRedirect("/admin/ticker");
 
   const message = parseFormString(formData, "message");
-  if (!message) return { error: "Message is required" };
+  const priority = Number(parseFormString(formData, "priority") || "0");
+
+  const validationError = validateTickerFields({ message, priority });
+  if (validationError) return { error: validationError };
 
   try {
     await createTickerMessage({
       message,
-      priority: Number(parseFormString(formData, "priority") || "0"),
+      priority,
     });
   } catch (err) {
     return { error: err instanceof Error ? err.message : "Failed to create ticker message" };
@@ -186,12 +331,15 @@ export async function updateTickerAction(
   await requireAuthOrRedirect("/admin/ticker");
 
   const message = parseFormString(formData, "message");
-  if (!message) return { error: "Message is required" };
+  const priority = Number(parseFormString(formData, "priority") || "0");
+
+  const validationError = validateTickerFields({ message, priority });
+  if (validationError) return { error: validationError };
 
   try {
     await updateTickerMessage(id, {
       message,
-      priority: Number(parseFormString(formData, "priority") || "0"),
+      priority,
       isActive: parseFormBool(formData, "isActive"),
     });
   } catch (err) {

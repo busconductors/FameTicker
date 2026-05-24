@@ -1,5 +1,4 @@
 import Link from "next/link";
-import BreakingTicker from "../components/BreakingTicker";
 import Hero from "../components/Hero";
 import TrendingNow from "../components/TrendingNow";
 import ArticleCard from "../components/ArticleCard";
@@ -23,7 +22,6 @@ export default async function Home() {
 
   return (
     <>
-      <BreakingTicker />
       <Hero />
 
       {/* Trending Now + Latest Stories row */}
