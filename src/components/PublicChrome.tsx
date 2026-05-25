@@ -20,11 +20,9 @@ export default function PublicChrome({
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <div className="sticky top-0 z-50">
-        {header}
-        {ticker}
-      </div>
+    <div className="flex min-h-screen flex-col pt-[40px]">
+      {header}
+      {ticker}
       <main className="flex-1">{children}</main>
       {footer}
     </div>
