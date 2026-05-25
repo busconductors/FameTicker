@@ -31,7 +31,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full border-b border-border/60 backdrop-blur supports-[backdrop-filter]:bg-background/80",
+        "z-50 w-full border-b border-border/60 backdrop-blur supports-[backdrop-filter]:bg-background/80",
         scrolled ? "shadow-elevated" : ""
       )}
     >
