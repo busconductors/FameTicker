@@ -64,8 +64,10 @@ export const posts: Post[] = [
     category: "Relationships",
     tags: ["Taylor Swift", "Travis Kelce", "Relationships"],
     image: {
-      src: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1600&auto=format&fit=crop",
-      alt: "Couple holding hands with a ring in focus",
+      src: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Taylor_Swift_at_the_2023_MTV_Video_Music_Awards_%283%29.png",
+      alt: "Taylor Swift at the 2023 MTV Video Music Awards",
+      width: 1801,
+      height: 2560,
     },
     content: `<p>It's official — Taylor Swift and Travis Kelce are engaged. Eagle-eyed Swifties first spotted the ring during a recent awards ceremony, and multiple sources have now confirmed the news.</p>
 <p>Rumors turned into fireworks when an eagle-eyed fan close-up revealed the ring's details. The couple has been at the center of engagement speculation for months, and this appears to be the confirmation fans have been waiting for.</p>`,
@@ -83,8 +85,10 @@ export const posts: Post[] = [
     category: "Fashion",
     tags: ["Doechii", "Met Gala", "Fashion"],
     image: {
-      src: "https://images.unsplash.com/photo-1581368129680-4ed6b2ee2050?q=80&w=1600&auto=format&fit=crop",
-      alt: "Purple gown swirling on a lit staircase",
+      src: "https://upload.wikimedia.org/wikipedia/commons/6/63/Doechii_performs_at_the_Grammy_Museum_%28Dec_2024%3B_3%29_%28cropped%29.png",
+      alt: "Doechii performs at the Grammy Museum, December 2024",
+      width: 612,
+      height: 761,
     },
     content: `<p>Leave it to Doechii to break every rule on fashion's biggest night. The rapper arrived at the 2026 Met Gala barefoot, wearing a sweeping plum Marc Jacobs gown that instantly became the most talked-about look of the evening.</p>
 <p>The barefoot moment divided fashion Twitter and delighted the red carpet's chaos enthusiasts. Critics called it irreverent genius; traditionalists called it disrespectful. Either way, Doechii owned the night.</p>`,
@@ -145,10 +149,10 @@ export const posts: Post[] = [
     category: "Fashion",
     tags: ["Beyoncé", "Blue Ivy", "Met Gala", "Fashion"],
     image: {
-      src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1600&auto=format&fit=crop",
-      alt: "Elegant couture gown on red carpet stairs",
-      width: 1600,
-      height: 1000,
+      src: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2810_of_118%29_%2852946364598%29_%28best_crop%29.jpg",
+      alt: "Beyoncé performing at Tottenham Hotspur Stadium, June 2023",
+      width: 900,
+      height: 1200,
     },
     content: `<p>Beyoncé made a stunning return to the Met Gala after a decade-long absence, arriving in a jaw-dropping skeleton-inspired gown with daughter Blue Ivy by her side.</p>
 <p>After a decade away, Beyoncé's return dominated timelines and set the internet ablaze. The mother-daughter moment was the emotional core of the evening, with Blue Ivy matching her mother's elegance at every step.</p>`,
@@ -166,8 +170,10 @@ export const posts: Post[] = [
     category: "Fashion",
     tags: ["Rihanna", "Met Gala", "Fashion"],
     image: {
-      src: "https://images.unsplash.com/photo-1598488035139-bdbb2235a20c?q=80&w=1600&auto=format&fit=crop",
-      alt: "Rihanna in couture with shimmering textures",
+      src: "https://upload.wikimedia.org/wikipedia/commons/d/d6/Rihanna_%286891074628%29.jpg",
+      alt: "Rihanna in 2011",
+      width: 2592,
+      height: 3888,
     },
     content: `<p>Rihanna once again proved why she's fashion's most fearless icon, arriving at the 2026 Met Gala in shimmering Maison Margiela couture that left the crowd speechless.</p>
 <p>Dramatic structure met cinematic sparkle — Rihanna remains the undisputed moment-maker. Every appearance she makes at the Met Gala rewrites the rules of what red carpet fashion can be.</p>`,
@@ -183,8 +189,10 @@ export const posts: Post[] = [
     category: "Movies",
     tags: ["Zendaya", "Dune", "Movies", "Fashion"],
     image: {
-      src: "https://images.unsplash.com/photo-1516570161787-2fd917215a3d?q=80&w=1600&auto=format&fit=crop",
-      alt: "Avant-garde metallic dress on a blue carpet",
+      src: "https://upload.wikimedia.org/wikipedia/commons/2/28/Zendaya_-_2019_by_Glenn_Francis.jpg",
+      alt: "Zendaya in 2019",
+      width: 2490,
+      height: 3735,
     },
     content: `<p>Zendaya's press tour for the Dune sequel has become a fashion event in its own right, with the actress delivering look after look of sci-fi inspired glamour.</p>
 <p>The press tour doubles as a runway where references to sci‑fi classics blend with modern couture. From armor-inspired silhouettes to liquid metallics, every appearance pushes the boundaries of what a promotional tour can look like.</p>`,
@@ -200,8 +208,10 @@ export const posts: Post[] = [
     category: "Movies",
     tags: ["Movies", "Summer 2026", "Blockbusters"],
     image: {
-      src: "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?q=80&w=1600&auto=format&fit=crop",
-      alt: "Cinema screen with dramatic lighting",
+      src: "https://images.unsplash.com/photo-1614115866447-c9a299154650?q=80&w=1600&auto=format&fit=crop",
+      alt: "Red carpet at a movie premiere",
+      width: 1600,
+      height: 900,
     },
     content: `<p>Summer 2026 is shaping up to be one of the most competitive movie seasons in years, with sequels, reboots, and surprise originals all vying for box office dominance.</p>
 <p>Studios are betting big on crowd-pleasing spectacles with a few risky swings. From long-awaited franchise continuations to bold original concepts, here are the nine films everyone will be talking about.</p>`,
@@ -217,8 +227,10 @@ export const posts: Post[] = [
     category: "Music",
     tags: ["Drake", "Music"],
     image: {
-      src: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1600&auto=format&fit=crop",
-      alt: "Rapper performing on stage with purple lights",
+      src: "https://upload.wikimedia.org/wikipedia/commons/1/15/Drake_at_The_Carter_Effect_2017_%2836818935200%29_%28cropped%29.jpg",
+      alt: "Drake at the 2017 Toronto International Film Festival",
+      width: 690,
+      height: 956,
     },
     content: `<p>Drake surprised fans with a midnight mixtape drop after weeks of cryptic social media posts that had the internet buzzing with speculation.</p>
 <p>The project features a range of collaborators and nods to early 2010s sounds. Within hours, fans had already begun decoding bars, references, and hidden meanings across social media.</p>`,
@@ -234,8 +246,10 @@ export const posts: Post[] = [
     category: "Relationships",
     tags: ["Relationships", "Celebrities"],
     image: {
-      src: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1600&auto=format&fit=crop",
-      alt: "Polaroids of celebrity couples on a corkboard",
+      src: "https://images.unsplash.com/photo-1764581659101-0c2a38ebe301?q=80&w=1600&auto=format&fit=crop",
+      alt: "Hollywood clapperboard on a yellow background",
+      width: 1600,
+      height: 900,
     },
     content: `<p>2026 has already delivered some jaw-dropping relationship updates from Hollywood's most watched couples.</p>
 <p>A whirlwind month in Hollywood left the internet dizzy. From secret weddings that nobody saw coming to mutual unfollows that sparked breakup rumors, here's your complete guide to who's together, who's not, and who's making it complicated.</p>`,
@@ -251,8 +265,10 @@ export const posts: Post[] = [
     category: "Reality TV",
     tags: ["Reality TV"],
     image: {
-      src: "https://images.unsplash.com/photo-1521133573892-e44906baee46?q=80&w=1600&auto=format&fit=crop",
-      alt: "TV production stage with bright lights",
+      src: "https://images.unsplash.com/photo-1776437209399-51c80373505e?q=80&w=1600&auto=format&fit=crop",
+      alt: "Hollywood production center",
+      width: 1600,
+      height: 900,
     },
     content: `<p>In one of the most dramatic turnarounds in reality television history, the season's most-hated villain has undergone a complete redemption arc.</p>
 <p>Public perception changed almost instantly after a candid long-form interview appeared online. A viral apology, a teary reunion with a former rival, and a surprise casting twist flipped the narrative overnight. Fans who swore they'd never forgive are now leading the redemption campaign.</p>`,

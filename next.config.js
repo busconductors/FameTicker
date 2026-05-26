@@ -7,6 +7,7 @@ const nextConfig = {
       "images.unsplash.com",
       "ext.same-assets.com",
       "ugc.same-assets.com",
+      "upload.wikimedia.org",
     ],
     remotePatterns: [
       {
@@ -29,6 +30,11 @@ const nextConfig = {
         hostname: "ugc.same-assets.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+        pathname: "/**",
+      },
     ],
   },
   async headers() {
@@ -42,7 +48,7 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: https://source.unsplash.com https://images.unsplash.com https://ext.same-assets.com https://ugc.same-assets.com",
+              "img-src 'self' data: https://source.unsplash.com https://images.unsplash.com https://ext.same-assets.com https://ugc.same-assets.com https://upload.wikimedia.org",
               "font-src 'self'",
               "connect-src 'self'",
               "frame-src 'none'",
